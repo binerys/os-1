@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 
-int main(int argc, char** argv)
+int parsing(int argc, char** argv)
 {
     while (1)
     {
