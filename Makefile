@@ -1,19 +1,14 @@
 OPTIMIZE=-O2
+CC = gcc
+CFLAGS = $(OPTIMIZE) -g3 -Wall
+DEPS = parsing.h
+OBJ = main.o parsing.o
 
-CC=gcc
-CFLAGS=$(OPTIMIZE) -g3 #add more as needed
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-all: simpsh
-
-simpsh: main.o parsing.o
-	$(CC) $(CFLAGS) main.o parsing.o -o simpsh
-	#could need to be main.o - may need to have depend on many object files
-
-main.o: main.c
-	$(CC) $(CFLAGS) main.c
-
-parsing.o: parsing.c
-	$(CC) $(CFLAGS) parsing.c
+simpsh: $(OBJ)
+	gcc $(CFLAGS) -o $@ $^
 
 #tests: 
 #check:
