@@ -3,21 +3,27 @@ OPTIMIZE=-O2
 CC=gcc
 CFLAGS=$(OPTIMIZE) -g3 #add more as needed
 
-default: simpsh
+all: simpsh
 
-simpsh: 
-	$(CC) $(CFLAGS) $@ main.c
+simpsh: main.o parsing.o
+	$(CC) $(CFLAGS) main.o parsing.o -o simpsh
 	#could need to be main.o - may need to have depend on many object files
 
-tests: 
-check:
+main.o: main.c
+	$(CC) $(CFLAGS) main.c
 
-dist: lab1-GarimaLunawatBreannaNery.tar.gz
-sources: Makefile main.c
-lab1-GarimaLunawatBreannaNery.tar.gz: $(sources) 
-    tar -czf $@ $(sources)
+parsing.o: parsing.c
+	$(CC) $(CFLAGS) parsing.c
+
+#tests: 
+#check:
+
+#dist: lab1-GarimaLunawatBreannaNery.tar.gz
+#sources: Makefile main.c
+#lab1-GarimaLunawatBreannaNery.tar.gz: $(sources) 
+ #   tar -czf $@ $(sources)
 
 clean:
-	rm -f *.o *.so *.so.* *.tgz simpsh lab1-GarimaLunawatBreannaNery.tar.gz
+	rm -f *.o *.so *.so.* simpsh
 
 
