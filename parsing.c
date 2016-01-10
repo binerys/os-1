@@ -29,17 +29,21 @@ int parsing(int argc, char** argv)
         {
             case 'r':
                 //do I need a printf here? 
-                fd = open_rdonly_f(optarg);
-                handle_fd(fd); 
+                printf("rdonly");
+                //fd = open_rdonly_f(optarg);
+                //handle_fd(fd); 
                 break;
             case 'w':
-                fd = open_wronly_f(optarg);
-                handle_fd(fd);
+                printf("wronly");
+                //fd = open_wronly_f(optarg);
+                //handle_fd(fd);
                 break;
             case 'c':
+                printf("command");
                 break;
             case 'v':
                 //set bool to true
+                printf("verbose");
                 break;
             default:
                 abort();
