@@ -25,11 +25,11 @@ int parsing(int argc, char** argv)
         {
             case 'r':
                 //do I need a printf here? 
-                fd = open_rdonly_file(optarg);
+                fd = open_rdonly_f(optarg);
                 handle_filedesc(fd); 
                 break;
             case 'w':
-                fd = open_wronly_file(optarg);
+                fd = open_wronly_f(optarg);
                 handle_filedesc(fd);
                 break;
             case 'c':
