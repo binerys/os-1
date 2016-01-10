@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <getopt.h>
 
+#include "parsing.h"
+#include "openF.h"
+#include "handling.h"
+
 int parsing(int argc, char** argv)
 {
     while (1)
@@ -35,6 +39,7 @@ int parsing(int argc, char** argv)
             case 'c':
                 break;
             case 'v':
+                //set bool to true
                 break;
             default:
                 abort();
