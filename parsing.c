@@ -32,16 +32,13 @@ int parsing(int argc, char** argv)
         switch(a)
         {
             case 'r':
-<<<<<<< HEAD
                 //do I need a printf here? 
                 //printf("rdonly");
                 if (verboseTrue == true)
                 {
                     printf("--rdonly "); //add file that it is actually reading in - %
                 }
-=======
                 printf("rdonly \n");
->>>>>>> b8e9ca70a4ad28fe89b84e3bd852364f35d5e8ff
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
@@ -49,7 +46,11 @@ int parsing(int argc, char** argv)
                 //printf("wronly");
                 if (verboseTrue == true)
                 {
+<<<<<<< HEAD
                     printf("--wronly "); //add file that it is actually reading in - %
+=======
+                    printf("--wronly "); //add file that it is actually reading 
+>>>>>>> 2580bda3aca9c0d54c95043c0706dffaef7a830c
                 }
 
                 fd = open_wronly_f(optarg);
