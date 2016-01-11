@@ -55,8 +55,7 @@ int parsing(int argc, char** argv)
 
                     char addOn[];
                     char *optArgString = addString(&addOn , argv[optind]);
-                    //implement optArgString
-                    
+                   //do more stuff here 
                         
                 }
                 break;
