@@ -20,7 +20,8 @@ int parsing(int argc, char** argv)
             {"rdonly", required_argument, 0, 'r'},
             {"wronly", required_argument, 0, 'w'},
             {"command", required_argument, 0, 'c'},
-            {"verbose", no_argument, 0, 'v'} 
+            {"verbose", no_argument, 0, 'v'},
+            {0,0,0,0} 
         };
 
         int option_index = 0;
