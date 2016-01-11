@@ -30,7 +30,6 @@ int parsing(int argc, char** argv)
         switch(a)
         {
             case 'r':
-                //do I need a printf here? 
                 printf("rdonly \n");
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
@@ -53,8 +52,8 @@ int parsing(int argc, char** argv)
                         }
                     }
 
-                    // char addOn[];
-                    // char *optArgString = addString(&addOn , argv[optind]);
+                    //char addOn[];
+                    char *optArgString = addString(&addOn , argv[optind]);
                     //implement optArgString
                     
                         
