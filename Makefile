@@ -1,8 +1,8 @@
 OPTIMIZE=-O2
 CC = gcc
-CFLAGS = $(OPTIMIZE) -g3 -Wall
-DEPS = parsing.h
-OBJ = main.o parsing.o
+CFLAGS = $(OPTIMIZE) -g3
+DEPS = parsing.h handling.h openF.h
+OBJ = main.o parsing.o openF.o handling.o
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
