@@ -5,9 +5,10 @@
 
 #include "openF.h"
 
+// Open file as read only 
 int open_rdonly_f (char* file)
 {
-    //not sure 
+    
     int fd = open(file, O_RDONLY);
     if (fd == -1)
     {
@@ -20,9 +21,9 @@ int open_rdonly_f (char* file)
     }
 }
 
+// Open file as write only
 int open_wronly_f (char* file)
 {
-    //not sure 
     int fd = open(file, O_WRONLY);
     if (fd == -1)
     {
