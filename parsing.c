@@ -6,6 +6,8 @@
 #include "openF.h"
 #include "handling.h"
 
+bool verboseTrue = false; 
+
 int parsing(int argc, char** argv)
 {
     while (1)
@@ -32,11 +34,21 @@ int parsing(int argc, char** argv)
             case 'r':
                 //do I need a printf here? 
                 //printf("rdonly");
+                if (verboseTrue == true)
+                {
+                    printf("--rdonly "); //add file that it is actually reading in - %
+                }
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
             case 'w':
                 //printf("wronly");
+                if (verboseTrue == true)
+                {
+                    printf("--wronly "); //add file that it is actually reading 
+in - %
+                }
+
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
                 break;
@@ -62,6 +74,7 @@ int parsing(int argc, char** argv)
             case 'v':
                 //set bool to true
                 //printf("verbose");
+                verboseTrue = true;
                 break;
             default:
                 abort();
