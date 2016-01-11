@@ -1,35 +1,35 @@
 #include "handling.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-#define INIT_FD 100
-
+int INIT_FD = 100;
+int *fileDescriptors;
 // fileDescriptors: Dynamic array of file descriptors created during simpsh usage
 // - Simpsh FD # (Array Index) -> Actual FD # (Index Value)
 
 // INITIALIZE fileDescriptors ARRAY
-int* fileDescriptors = malloc(INIT_FD*sizeof(int));
-if (fileDescriptors = NULL)
-{
+fileDescriptors = malloc(INIT_FD*sizeof(int));
+if (fileDescriptors = NULL){
     exit(EXIT_FAILURE);
 }
 
 // RESIZE fileDescriptors ARRAY
-if ( (index+1) >= INIT_FD )
+if((index+1)>=INIT_FD){
     int* fileDescriptors = malloc(INIT_FD*2*sizeof(int));
-if (fileDescriptors = NULL)
-{
+}
+if (fileDescriptors = NULL){
     exit(EXIT_FAILURE);
 }
 //--------------------------------------------------------//
 
-// index - Keeps track of Simpsh FD, begins at 0
-int index = 0;
+// fd_index - Keeps track of Simpsh FD, begins at 0
+int fd_index = 0;
 
 void handle_fd(int fd)
 {
-    fileDescriptors[index] = fd;
-    index++;
-    printf(fileDescriptors[index]); // test
+    fileDescriptors[fd_index] = fd;
+    fd_index++;
+    printf(fileDescriptors[fd_index]); // test
 }
 char* optArgString(char *a, char *b)
 {
@@ -46,5 +46,5 @@ char* optArgString(char *a, char *b)
 
     *a = '\0';
 
-    return tmp
+    return tmp;
 }
