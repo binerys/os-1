@@ -3,8 +3,8 @@
 #include <getopt.h>
 
 #include "parsing.h"
-//#include "openF.h"
-//#include "handling.h"
+#include "openF.h"
+#include "handling.h"
 
 int parsing(int argc, char** argv)
 {
@@ -31,25 +31,41 @@ int parsing(int argc, char** argv)
         {
             case 'r':
                 //do I need a printf here? 
-                printf("rdonly");
-                //fd = open_rdonly_f(optarg);
-                //handle_fd(fd); 
+                //printf("rdonly");
+                fd = open_rdonly_f(optarg);
+                handle_fd(fd); 
                 break;
             case 'w':
-                printf("wronly");
-                //fd = open_wronly_f(optarg);
-                //handle_fd(fd);
+                //printf("wronly");
+                fd = open_wronly_f(optarg);
+                handle_fd(fd);
                 break;
             case 'c':
-                printf("command");
+                //printf("command");
+                optind--;
+                for (int index = 0; optind < argc; optind++)
+                {
+                    if (*argv[optind] == '-')
+                    {
+                        if (*(argv[optind]++) == '-')
+                        {
+                            break;
+                        }
+                    }
+
+                    char addOn[];
+                    char *optArgString = addString(&addOn , argv[optind]);
+                    //implement optArgString
+                    
+                        
+                }
                 break;
             case 'v':
                 //set bool to true
-                printf("verbose");
+                //printf("verbose");
                 break;
             default:
                 abort();
         }
-
     }    
 }
