@@ -46,11 +46,7 @@ int parsing(int argc, char** argv)
                 //printf("wronly");
                 if (verboseTrue == true)
                 {
-<<<<<<< HEAD
                     printf("--wronly "); //add file that it is actually reading in - %
-=======
-                    printf("--wronly "); //add file that it is actually reading 
->>>>>>> 2580bda3aca9c0d54c95043c0706dffaef7a830c
                 }
 
                 fd = open_wronly_f(optarg);
