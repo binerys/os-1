@@ -1,23 +1,24 @@
 OPTIMIZE=-O2
+CC = gcc
+CFLAGS = $(OPTIMIZE) -g3 -Wall
+DEPS = parsing.h
+OBJ = main.o parsing.o
 
-CC=gcc
-CFLAGS=$(OPTIMIZE) -g3 #add more as needed
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-default: simpsh
+simpsh: $(OBJ)
+	gcc $(CFLAGS) -o $@ $^
 
-simpsh: 
-	$(CC) $(CFLAGS) $@ main.c
-	#could need to be main.o - may need to have depend on many object files
+#tests: 
+#check:
 
-tests: 
-check:
-
-dist: lab1-GarimaLunawatBreannaNery.tar.gz
-sources: Makefile main.c
-lab1-GarimaLunawatBreannaNery.tar.gz: $(sources) 
-    tar -czf $@ $(sources)
+#dist: lab1-GarimaLunawatBreannaNery.tar.gz
+#sources: Makefile main.c
+#lab1-GarimaLunawatBreannaNery.tar.gz: $(sources) 
+ #   tar -czf $@ $(sources)
 
 clean:
-	rm -f *.o *.so *.so.* *.tgz simpsh lab1-GarimaLunawatBreannaNery.tar.gz
+	rm -f *.o *.so *.so.* simpsh
 
 
