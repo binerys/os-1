@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <getopt.h>
 
 #include "parsing.h"
 #include "openF.h"
 #include "handling.h"
 
-bool verboseTrue = false; 
+int verboseTrue = 0; 
 
 int parsing(int argc, char** argv)
 {
@@ -33,8 +34,7 @@ int parsing(int argc, char** argv)
         {
             case 'r':
                 //do I need a printf here? 
-                //printf("rdonly");
-                if (verboseTrue == true)
+                if (verboseTrue == 1)
                 {
                     printf("--rdonly "); //add file that it is actually reading in - %
                 }
@@ -43,38 +43,40 @@ int parsing(int argc, char** argv)
                 handle_fd(fd); 
                 break;
             case 'w':
-                //printf("wronly");
-                if (verboseTrue == true)
+                if (verboseTrue == 1)
                 {
-                    printf("--wronly "); //add file that it is actually reading in - %
+                    printf("--wronly "); //add file that it is actually reading in
                 }
-
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
                 break;
             case 'c':
-                //printf("command");
+                // Bring optind back one to read arguments 
                 optind--;
-                for (int index = 0; optind < argc; optind++)
+                // Array of command arguments
+                char* commandArgs[4];
+                int argLen = 0;
+                for (int i= 0; optind < argc; optind++)
                 {
-                    if (*argv[optind] == '-')
-                    {
-                        if (*(argv[optind]++) == '-')
-                        {
-                            break;
-                        }
+                    if(argv[optind][0] == '-' && argv[optind][1] == '-'){
+                        printf("Discovered new option: %s \n",argv[optind]);
+                        break;
                     }
 
-                    //char addOn[];
-                    char *optArgString = addString(&addOn , argv[optind]);
-                   //do more stuff here 
-                        
+                    printf("Current arg: %s \n",argv[optind]);
+                    argLen = strlen(argv[optind]);
+                    commandArgs[i] = malloc(argLen*sizeof(char));
+                    strcpy(commandArgs[i], argv[optind]);
+                    printf("The copied arg: %s \n", commandArgs[i]);
+                    i++;
+
                 }
+
                 break;
             case 'v':
                 //set bool to true
                 //printf("verbose");
-                verboseTrue = true;
+                verboseTrue = 1;
                 break;
             default:
                 abort();
