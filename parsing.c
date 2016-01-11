@@ -6,7 +6,7 @@
 #include "openF.h"
 #include "handling.h"
 
-bool verboseTrue = false; 
+int verboseTrue = 0; 
 
 int parsing(int argc, char** argv)
 {
@@ -34,19 +34,20 @@ int parsing(int argc, char** argv)
             case 'r':
                 //do I need a printf here? 
                 //printf("rdonly");
-                if (verboseTrue == true)
+                if (verboseTrue == 1)
                 {
-                    printf("--rdonly "); //add file that it is actually reading in - %
+                    printf("--rdonly %s", optarg); 
                 }
+
                 printf("rdonly \n");
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
             case 'w':
                 //printf("wronly");
-                if (verboseTrue == true)
+                if (verboseTrue == 1)
                 {
-                    printf("--wronly "); //add file that it is actually reading in - %
+                    printf("--wronly %s", optarg); 
                 }
 
                 fd = open_wronly_f(optarg);
@@ -55,7 +56,8 @@ int parsing(int argc, char** argv)
             case 'c':
                 //printf("command");
                 optind--;
-                for (int index = 0; optind < argc; optind++)
+                int index = 0;
+                for (index = 0; optind < argc; optind++)
                 {
                     if (*argv[optind] == '-')
                     {
@@ -65,8 +67,8 @@ int parsing(int argc, char** argv)
                         }
                     }
 
-                    //char addOn[];
-                    char *optArgString = addString(&addOn , argv[optind]);
+                    //char addOn[5];
+                    //char *optArgString = addString(&addOn , argv[optind]);
                    //do more stuff here 
                         
                 }
@@ -74,7 +76,7 @@ int parsing(int argc, char** argv)
             case 'v':
                 //set bool to true
                 //printf("verbose");
-                verboseTrue = true;
+                verboseTrue = 1;
                 break;
             default:
                 abort();
