@@ -31,7 +31,7 @@ int parsing(int argc, char** argv)
         {
             case 'r':
                 //do I need a printf here? 
-                //printf("rdonly");
+                printf("rdonly \n");
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;

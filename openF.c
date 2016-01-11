@@ -10,6 +10,7 @@ int open_rdonly_f (char* file)
 {
     
     int fd = open(file, O_RDONLY);
+    printf("fd value is %d", fd);
     if (fd == -1)
     {
         printf("Error");
