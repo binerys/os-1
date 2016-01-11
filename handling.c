@@ -29,6 +29,7 @@ void handle_fd(int fd)
 {
     fileDescriptors[index] = fd;
     index++;
+    printf(fileDescriptors[index]); // test
 }
 char* optArgString(char *a, char *b)
 {
