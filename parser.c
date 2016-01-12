@@ -37,10 +37,10 @@ int parser(int argc, char** argv)
             {   
                 if (verboseTrue == 1)
                 {
-                    printf("--rdonly %s\n", optarg); 
+//                    printf("--rdonly %s\n", optarg); 
                 }
                 
-                int rdCount = -1;
+     /*           int rdCount = -1;
                 
                 for (int i= 0; optind < argc; optind++)
                 {
@@ -52,16 +52,33 @@ int parser(int argc, char** argv)
                 }             
                 printf("rdCount: %d\n",rdCount);                
 
-                if (rdCount == -1)
-                {
-                    break;
-                }
-
                 if (rdCount != 0)
                 {
                     printf("Error: Not the correct amount of arguments for rdonly\n");
                     //break;
-                }   
+                }
+
+                if (rdCount == -1)
+                {
+                    break;
+                }   */
+
+                if(optarg == NULL || (optarg[0] == '-' && optarg[1] == '-')) //would it actually equal null?
+                {
+                    fprintf( stderr, "Error: Missing file operand!\n" );
+                    optind--;
+                    if (verboseTrue == 1)
+                    {
+                        printf("--rdonly\n");
+                    }
+                    break;
+
+                }
+                
+                if ( optind < argc && optarg[2] != '-')
+                {   
+                    printf("TACOS");
+                }
 
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
