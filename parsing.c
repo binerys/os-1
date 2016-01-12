@@ -9,6 +9,10 @@
 
 int verboseTrue = 0; 
 
+// - Processes fds and command
+// - Verifies if fd's exist: returns 0 if no
+// - Attempts to run command 
+
 int parsing(int argc, char** argv)
 {
     while (1)
@@ -53,24 +57,36 @@ int parsing(int argc, char** argv)
             case 'c':
                 // Bring optind back one to read arguments 
                 optind--;
+
                 // Array of command arguments
                 char* commandArgs[4];
                 int argLen = 0;
+                int argCount = 0;
                 for (int i= 0; optind < argc; optind++)
                 {
+                    // 
                     if(argv[optind][0] == '-' && argv[optind][1] == '-'){
                         printf("Discovered new option: %s \n",argv[optind]);
                         break;
                     }
 
+                    if (argCount == 4){
+                        printf("Error: Too many arguments");
+                        break;
+                    }
                     printf("Current arg: %s \n",argv[optind]);
                     argLen = strlen(argv[optind]);
                     commandArgs[i] = malloc(argLen*sizeof(char));
                     strcpy(commandArgs[i], argv[optind]);
                     printf("The copied arg: %s \n", commandArgs[i]);
+                    argcount++;
                     i++;
-
+                   
                 }
+                if (argCount != 4)
+                    printf("Error: Too little arguments");
+
+                command(commandArgs);
 
                 break;
             case 'v':

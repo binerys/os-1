@@ -17,20 +17,4 @@ void handle_fd(int fd)
     fileDescriptors[fd_index] = fd;
     fd_index++;
 }
-char* optArgString(char *a, char *b)
-{
-    char *tmp = a;
 
-    //should prob do somehting to a here
-
-    while (*b != '\0')
-    {
-        *a = *b;
-        a++;
-        b++;
-    }
-
-    *a = '\0';
-
-    return tmp;
-}
