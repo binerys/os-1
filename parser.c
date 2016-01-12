@@ -59,9 +59,6 @@ int parser(int argc, char** argv)
             case 'c':
                 // Bring optind back one to read arguments 
                 optind--;
-                //int index = 0;
-                //for (index = 0; optind < argc; optind++)
-
                 // Array of command arguments
                 char* commandArgs[4];
                 int argLen = 0;
@@ -92,7 +89,7 @@ int parser(int argc, char** argv)
                 if (argCount != 4)
                     printf("Error: Too little arguments");
 
-                // Extract commands from commandArgs and call command
+                // Extract commands from commandArgs and validate
                 int temp; 
                 char* end;
                 for(int i = 0; i < argCount; i++)
@@ -111,11 +108,10 @@ int parser(int argc, char** argv)
                         if(i == 0)  input = temp;
                         if(i == 1)  output = temp;
                         if(i == 2)  error = temp; 
-
                     }
-
-
                 }
+
+                // Call command
                 break;
             case 'v':
                 //set bool to true
