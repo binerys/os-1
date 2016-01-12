@@ -52,6 +52,11 @@ int parser(int argc, char** argv)
                 }             
                 printf("rdCount: %d\n",rdCount);                
 
+                if (rdCount == -1)
+                {
+                    break;
+                }
+
                 if (rdCount != 0)
                 {
                     printf("Error: Not the correct amount of arguments for rdonly\n");
