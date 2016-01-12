@@ -41,10 +41,9 @@ int parser(int argc, char** argv)
             case 'r':   
                 if (verboseTrue == 1)
                 {
-                    printf("--rdonly %s", optarg); 
+                    printf("--rdonly %s\n", optarg); 
                 }
 
-                printf("rdonly \n");
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
@@ -52,7 +51,7 @@ int parser(int argc, char** argv)
                 //printf("wronly");
                 if (verboseTrue == 1)
                 {
-                    printf("--wronly %s", optarg); 
+                    printf("--wronly %s\n", optarg); 
                 }
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
