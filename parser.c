@@ -59,8 +59,8 @@ int parser(int argc, char** argv)
             case 'c':
                 // Bring optind back one to read arguments 
                 optind--;
-                int index = 0;
-                for (index = 0; optind < argc; optind++)
+                //int index = 0;
+                //for (index = 0; optind < argc; optind++)
 
                 // Array of command arguments
                 char* commandArgs[4];
@@ -82,18 +82,20 @@ int parser(int argc, char** argv)
                     commandArgs[i] = malloc(argLen*sizeof(char));
                     strcpy(commandArgs[i], argv[optind]);
                     printf("The copied arg: %s \n", commandArgs[i]);
-                    argcount++;
+                    argCount++;
                     i++;
                 }
                 if (argCount != 4)
                     printf("Error: Too little arguments");
 
-                command(commandArgs);
-
                 break;
             case 'v':
                 //set bool to true
                 //printf("verbose");
+                if (verboseTrue == 1)
+                {
+                    printf("--verbose\n");
+                }
                 verboseTrue = 1;
                 break;
             default:
