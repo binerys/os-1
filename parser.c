@@ -3,9 +3,9 @@
 #include <string.h>
 #include <getopt.h>
 
-#include "parsing.h"
+#include "parser.h"
 #include "openF.h"
-#include "handling.h"
+#include "hander.h"
 
 int verboseTrue = 0; 
 
@@ -14,7 +14,7 @@ int verboseTrue = 0;
 // - Attempts to run command 
 
 
-int parsing(int argc, char** argv)
+int parser(int argc, char** argv)
 {
     while (1)
     {

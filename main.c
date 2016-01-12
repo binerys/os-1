@@ -1,8 +1,8 @@
-#include "parsing.h"
+#include "parser.h"
 
 int main(int argc, char** argv)
 {
-    parsing(argc, argv);
+    parser(argc, argv);
 
     return 0;    
 }
