@@ -5,7 +5,7 @@
 
 #include "parser.h"
 #include "openF.h"
-#include "hander.h"
+#include "handler.h"
 
 int verboseTrue = 0; 
 
