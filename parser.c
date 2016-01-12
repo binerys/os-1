@@ -8,12 +8,7 @@
 #include "handler.h"
 
 int verboseTrue = 0; 
-
-// - Processes fds and command
-// - Verifies if fd's exist: returns 0 if no
-// - Attempts to run command 
-
-
+ 
 int parser(int argc, char** argv)
 {
     while (1)
@@ -120,17 +115,6 @@ int parser(int argc, char** argv)
 
                 // Append null byte to cmdArgs
                 cmdArgs[cmdArgsCount] = "\0";
-
-                // QUICK TESTS: SAVE JUST IN CASE
-                printf("The input is: %d \n", input);
-                printf("The output is: %d \n", output);
-                printf("The error is: %d \n", error);
-
-                printf("The cmd args are...\n");
-                for(int j = 0; j < cmdArgsCount; j++)
-                {
-                    printf("Arg #%d: %s \n",j,cmdArgs[j]);
-                }
 
                 break;
             case 'v':
