@@ -38,24 +38,64 @@ int parser(int argc, char** argv)
         
         switch(a)
         {
-            case 'r':   
+            case 'r':
+            {   
                 if (verboseTrue == 1)
                 {
                     printf("--rdonly %s\n", optarg); 
                 }
+                
+                int rdCount = -1;
+                
+                for (int i= 0; optind < argc; optind++)
+                {
+                    rdCount++;
+                    if(argv[optind][0] == '-' && argv[optind][1] == '-'){
+                        //printf("Discovered new option: %s \n",argv[optind]);
+                        break;
+                    }
+                }             
+                printf("rdCount: %d\n",rdCount);                
+
+                if (rdCount != 0)
+                {
+                    printf("Error: Not the correct amount of arguments for rdonly\n");
+                    //break;
+                }   
 
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
+            }
             case 'w':
+            {
                 //printf("wronly");
                 if (verboseTrue == 1)
                 {
                     printf("--wronly %s\n", optarg); 
                 }
+
+                int wrCount = 0;
+
+                for (int i= 0; optind < argc; optind++)
+                {
+                    if(argv[optind][0] == '-' && argv[optind][1] == '-'){
+                        //printf("Discovered new option: %s \n",argv[optind]);
+                        break;
+                    }
+                    wrCount++;
+                }
+
+                if (wrCount != 0)
+                {
+                    printf("Error: Not the correct amount of arguments for wronly\n");
+                    break;
+                }
+
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
                 break;
+            }
             case 'c':
                 // Bring optind back one to read arguments 
                 optind--;
