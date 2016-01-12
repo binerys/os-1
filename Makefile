@@ -1,6 +1,6 @@
 OPTIMIZE=-O2
 CC = gcc
-CFLAGS = $(OPTIMIZE) -g3
+CFLAGS = $(OPTIMIZE) -g3 -std=gnu11
 DEPS = parser.h handler.h openF.h
 OBJ = main.o parser.o openF.o handler.o
 
