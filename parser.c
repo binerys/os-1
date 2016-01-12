@@ -8,12 +8,7 @@
 #include "handler.h"
 
 int verboseTrue = 0; 
-
-// - Processes fds and command
-// - Verifies if fd's exist: returns 0 if no
-// - Attempts to run command 
-
-
+ 
 int parser(int argc, char** argv)
 {
     while (1)
@@ -99,59 +94,68 @@ int parser(int argc, char** argv)
             case 'c':
                 // Bring optind back one to read arguments 
                 optind--;
-                // Array of command arguments
-                char* commandArgs[4];
-                int argLen = 0;
-                int argCount = 0;
+               
+                // File Descriptor args
+                int fdArgsLen = 0;
+                int fdArgsCount = 0;
                 int input = -1; 
                 int output = -1;
                 int error = -1; 
-                char* cmd; 
+
+                // Command Args
+                char* cmdArgs[100]; // will malloc eventually, don't forget to append null byte!
+                int cmdArgsLen = 0;
+                int cmdArgsIndex = 0; // Incrementer for cmdArgs
+                int cmdArgsCount = 0;
 
                 for (int i= 0; optind < argc; optind++)
                 {
-                    if(argv[optind][0] == '-' && argv[optind][1] == '-'){
+                    // Go through command args until we reach a new option
+                    if(argv[optind][0] == '-' && argv[optind][1] == '-')
+                    {
                         printf("Discovered new option: %s \n",argv[optind]);
                         break;
                     }
-                    if (argCount == 4){
-                        printf("Error: Too many arguments");
-                        break;
-                    }
-                    
-                    // Copy argument from argv to command args
-                    argLen = strlen(argv[optind]);
-                    commandArgs[i] = malloc(argLen*sizeof(char));
-                    strcpy(commandArgs[i], argv[optind]);
-                    argCount++;
-                    i++;
-                }
-                if (argCount != 4)
-                    printf("Error: Too little arguments");
 
-                // Extract commands from commandArgs and validate
-                int temp; 
-                char* end;
-                for(int i = 0; i < argCount; i++)
-                {
-                    // Arg #1,2,3: Check that arg is a single number
+                    // Process first three arguments
+                    // Conditions: Must be a single digit
+                    int temp; 
+                    char* end;
                     if(i == 0 | i == 1 | i == 2)
                     {
-                        argLen = strlen(commandArgs[i]);
-                        if( argLen != 1)
+                        fdArgsLen = strlen(argv[optind]);
+                        if (fdArgsLen != 1) // Check that it is a single digit
                             printf("Error! Argument is not a single character!");
-                        
-                        temp = strtol(commandArgs[i], &end,0);
-                        if(end == commandArgs[i]) // Not a digit
+
+                        temp = strtol(argv[optind], &end,0);
+                        if(end == argv[optind]) // Not a digit
                             printf("Error! Argument is not a digit!");
 
                         if(i == 0)  input = temp;
                         if(i == 1)  output = temp;
                         if(i == 2)  error = temp; 
+                        fdArgsCount++;
                     }
+
+                    // Parse remaining cmd arguments
+                    else 
+                    {
+                        cmdArgsLen = strlen(argv[optind]);
+                        cmdArgs[cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
+                        strcpy(cmdArgs[cmdArgsIndex], argv[optind]);
+                        cmdArgsIndex++;
+                        cmdArgsCount++;
+                    }
+
+                    i++;
                 }
 
-                // Call command
+                if(fdArgsCount != 3)
+                    printf("Error: Too little arguments");
+
+                // Append null byte to cmdArgs
+                cmdArgs[cmdArgsCount] = "\0";
+
                 break;
             case 'v':
                 //set bool to true
