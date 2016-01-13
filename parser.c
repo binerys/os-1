@@ -52,11 +52,12 @@ int parser(int argc, char** argv)
                 if (verboseTrue == 1)
                     printf("--rdonly %s\n", optarg);
                 
-                /*if ((optind < argc && optarg[2] != '-'))
+                if ((optind < argc && optarg[2] != '-'))
                 {
-                    printf("%d", optind);   
-                    printf("TACOS\n");
-                }*/
+                    //printf("%d", optind);   
+                    //printf("TACOS\n");
+                    exitStatus = 1;
+                }
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
@@ -82,11 +83,12 @@ int parser(int argc, char** argv)
                 }
 
 
-                /*if ((optind < argc && optarg[2] != '-'))
+                if ((optind < argc && optarg[2] != '-'))
                 {
-                    printf("%d", optind);   
-                    printf("TACOS\n");
-                }*/                
+                    //printf("%d", optind);   
+                    //printf("TACOS\n");
+                    exitStatus = 1;
+                }                
 
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
@@ -185,6 +187,7 @@ int parser(int argc, char** argv)
             default:
                 abort();
             case '?':
+                exitStatus = 1;
                 break;
         }
     }
