@@ -11,7 +11,8 @@ simpsh: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
 #tests: 
-#check:
+check:
+    ./test.sh
 
 #dist: lab1-GarimaLunawatBreannaNery.tar.gz
 #sources: Makefile main.c
