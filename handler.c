@@ -7,8 +7,6 @@
 #include "handler.h"
 #include "parser.h"
 
-int INIT_FD = 100;
-
 // fileDescriptors: Array of file descriptors created during simpsh usage
 // - Simpsh FD # (Array Index) -> Actual FD # (Index Value)
 int fileDescriptors[100];
@@ -22,8 +20,7 @@ int cmdCount = 0;
 pid_t pid_list[100];
 int pidCount = 0;
 
-int status_list[100];
-int statusCount = 0;
+
 
 void handle_fd(int fd)
 {
@@ -50,11 +47,6 @@ void add_pid(pid_t pid)
 	pidCount++;
 }
 
-void add_status(int st)
-{
-	status_list[statusCount] = st; 
-	statusCount++;
-}
 /**
  * Implementation of the command option
  * @param  i    Input file descriptor
@@ -85,41 +77,50 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	close(new_error);
 
 	int status;
+	int ret = 0;
 	pid_t pid = fork();
 
 	switch(pid)
 	{
 		case 0: // CHILD PROCESS
 			/* Execute Command */
-			if(execvp(args[0], args) == -1)
-				fprintf(stderr, "ERROR: Unable to execute command");
+			if(execvp(args[0], args) == -1){
+				fprintf(stderr, "ERROR: Unable to execute command \n");
+				return -1; 
+			}
 			cmdCount++;
 			break;
 
 		case -1: // ERROR
 			fprintf(stderr, "ERROR: Forking a child process failed \n");
+			return -1;
 			break;
 
 		default: // PARENT
 			/* Wait for child */
+			/*
 			add_pid(pid);
 			if (waitpid(pid_list[pidCount-1], &status,0) == -1){
 				fprintf(stderr, "ERROR: waitpid() failed");
+				return -1;
 			}
 			if (WEXITSTATUS(status)){
-				status_list[statusCount-1] = WEXITSTATUS(status);
+				ret = WEXITSTATUS(status);
 			}
+			*/
 			// Print subcommand exit status
-			printf("%d",WEXITSTATUS(status));
+			/*
+			printf("%d",ret);
 			for (int i = 0; i < argsCount; i++)
 			{
 				printf(" %s",args[i]);
 			}
 			printf("\n");
+			*/
 
 			break;
 	}
 
-
+	return ret;
 }
 

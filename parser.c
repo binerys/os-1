@@ -9,10 +9,20 @@
 
 int verboseTrue = 0; 
 int exitStatus = 0;
+
+int status_list[100];
+int statusCount = 0;
+
+void add_status(int st)
+{
+    status_list[statusCount] = st; 
+    statusCount++;
+}
  
 int parser(int argc, char** argv)
 {
-    while (1)
+    int loop = 1;
+    while (loop)
     {
         int a;  
         int fd;      
@@ -40,13 +50,12 @@ int parser(int argc, char** argv)
                 {
                     if (verboseTrue == 1)
                     {
-                        printf("--rdonly\n");
+                        printf("--rdonly \n");
                     }
-                    fprintf(stderr, "option '--rdonly' requires an argument\n");
+                    fprintf(stderr, "option '--rdonly' requires an argument \n");
                     exitStatus = 1;
                     optind--;
                     break;
-
                 }
 
                 if (verboseTrue == 1)
@@ -69,16 +78,15 @@ int parser(int argc, char** argv)
                     {
                         printf("--wronly\n");
                     }
-                    fprintf(stderr, "option '--wronly' requires an argument\n");
+                    fprintf(stderr, "option '--wronly' requires an argument \n");
                     exitStatus = 1;
                     optind--;
                     break;
-
                 }
 
                 if (verboseTrue == 1)
                 {
-                    printf("--wronly %s\n", optarg);
+                    printf("--wronly %s \n", optarg);
                 }
 
 
@@ -104,10 +112,11 @@ int parser(int argc, char** argv)
                 int error = -1; 
 
                 // Command Args
-                char* cmdArgs[100]; // will malloc eventually, don't forget to append null byte!
+                char* cmdArgs[100];
                 int cmdArgsLen = 0;
                 int cmdArgsIndex = 0; // Incrementer for cmdArgs
                 int cmdArgsCount = 0;
+                int cmdStatus;
 
                 for (int i= 0; optind < argc; optind++)
                 {
@@ -126,11 +135,11 @@ int parser(int argc, char** argv)
                     {
                         fdArgsLen = strlen(argv[optind]);
                         if (fdArgsLen != 1) // Check that it is a single digit
-                            printf("Error! Argument is not a single character!");
+                            fprintf(stderr,"Error! Argument is not a single character! \n");
 
                         temp = strtol(argv[optind], &end,0);
                         if(end == argv[optind]) // Not a digit
-                            printf("Error! Argument is not a digit!");
+                            fprintf(stderr,"Error! Argument is not a digit! \n");
 
                         if(i == 0)  input = temp;
                         if(i == 1)  output = temp;
@@ -153,10 +162,10 @@ int parser(int argc, char** argv)
                 }
 
                 if(fdArgsCount != 3)
-                    fprintf(stderr,"ERROR: Too little arguments");
+                    fprintf(stderr,"ERROR: Too little arguments \n");
                 if(input == -1 | output == -1 | error == -1)
                 {
-                    fprintf(stderr,"ERROR: Command args incorrectly set");
+                    fprintf(stderr,"ERROR: Command args incorrectly set \n");
                 }
 
                 // Append null pointer to cmdArgs
@@ -170,12 +179,14 @@ int parser(int argc, char** argv)
                     }
                     printf("\n");
                 }
-                command(input,output,error,cmdArgs,cmdArgsCount);
+                cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
+                /*if (cmdStatus == -1) // FATAL ERROR - break parsing and return max exit status
+                    loop = 0;
+                */
+                status_list[statusCount-1] = cmdStatus;
 
                 break;
             case 'v':
-                //set bool to true
-                //printf("verbose");
                 if (verboseTrue == 1)
                 {
                     printf("--verbose \n");
@@ -188,6 +199,8 @@ int parser(int argc, char** argv)
                 break;
         }
     }
+
+    // Return maximum exit status
     return exitStatus;    
 }
 

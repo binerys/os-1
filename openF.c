@@ -11,7 +11,7 @@ int open_rdonly_f (char* file)
     int fd = open(file, O_RDONLY,644);
     if (fd == -1)
     {
-        fprintf(stderr, "ERROR: Unable to open file as read-only.");
+        fprintf(stderr, "ERROR: Unable to open file as read-only. \n");
         return -1;
     }    
     else
@@ -26,7 +26,7 @@ int open_wronly_f (char* file)
     int fd = open(file, O_WRONLY,644);
     if (fd == -1)
     {
-        fprintf(stderr, "ERROR: Unable to open file as write-only");
+        fprintf(stderr, "ERROR: Unable to open file as write-only \n");
         return -1;
     }    
     else
