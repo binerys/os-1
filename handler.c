@@ -5,7 +5,7 @@
 #include <sys/wait.h>
 
 #include "handler.h"
-
+#include "parser.h"
 
 int INIT_FD = 100;
 
@@ -28,7 +28,6 @@ int statusCount = 0;
 void handle_fd(int fd)
 {
     fileDescriptors[fd_index] = fd;
-    printf("Value in array is: %d  at index %d \n", fileDescriptors[fd_index], fd_index);
     fd_index++;
 }
 
@@ -73,11 +72,8 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	int new_output = get_fd(o);
 	int new_error = get_fd(e);
 
-	printf("New_output fd is: %d \n", new_output);
-	printf("New_input fd is: %d \n", new_input);
-	printf("new_error fd is: %d \n", new_error);
 	if (new_error == -1 | new_output == -1 | new_input == -1){
-		printf("ERROR: file descriptors do not exist \n");
+		fprintf(stderr, "ERROR: File descriptors do not exist \n");
 	}
 
 	dup2(new_input,0);
@@ -96,24 +92,23 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		case 0: // CHILD PROCESS
 			/* Execute Command */
 			if(execvp(args[0], args) == -1)
-				printf("ERROR: Unable to execute command");
+				fprintf(stderr, "ERROR: Unable to execute command");
 			cmdCount++;
 			break;
 
 		case -1: // ERROR
-			printf("ERROR: Forking a child process failed \n");
+			fprintf(stderr, "ERROR: Forking a child process failed \n");
 			break;
 
 		default: // PARENT
 			/* Wait for child */
 			add_pid(pid);
 			if (waitpid(pid_list[pidCount-1], &status,0) == -1){
-				printf("ERROR: waitpid() failed");
+				fprintf(stderr, "ERROR: waitpid() failed");
 			}
 			if (WEXITSTATUS(status)){
 				status_list[statusCount-1] = WEXITSTATUS(status);
 			}
-
 			// Print subcommand exit status
 			printf("%d",WEXITSTATUS(status));
 			for (int i = 0; i < argsCount; i++)
@@ -121,6 +116,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 				printf(" %s",args[i]);
 			}
 			printf("\n");
+
 			break;
 	}
 
