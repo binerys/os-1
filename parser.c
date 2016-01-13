@@ -153,14 +153,23 @@ int parser(int argc, char** argv)
                 }
 
                 if(fdArgsCount != 3)
-                    printf("Error: Too little arguments");
+                    fprintf(stderr,"ERROR: Too little arguments");
                 if(input == -1 | output == -1 | error == -1)
                 {
-                    printf("Error: Command args incorrectly set");
+                    fprintf(stderr,"ERROR: Command args incorrectly set");
                 }
 
                 // Append null pointer to cmdArgs
                 cmdArgs[cmdArgsCount] = NULL;
+                if( verboseTrue == 1)
+                {
+                    printf("--commmand");
+                    for (int j = 0; j < cmdArgsCount; j++)
+                    {
+                        printf(" %s",cmdArgs[j]);
+                    }
+                    printf("\n");
+                }
                 command(input,output,error,cmdArgs,cmdArgsCount);
 
                 break;
