@@ -34,51 +34,30 @@ int parser(int argc, char** argv)
         switch(a)
         {
             case 'r':
-            {   
-                if (verboseTrue == 1)
+            { 
+                if (optarg[0] == '-' && optarg[1] == '-') 
                 {
-//                    printf("--rdonly %s\n", optarg); 
-                }
-                
-     /*           int rdCount = -1;
-                
-                for (int i= 0; optind < argc; optind++)
-                {
-                    rdCount++;
-                    if(argv[optind][0] == '-' && argv[optind][1] == '-'){
-                        //printf("Discovered new option: %s \n",argv[optind]);
-                        break;
-                    }
-                }             
-                printf("rdCount: %d\n",rdCount);                
-
-                if (rdCount != 0)
-                {
-                    printf("Error: Not the correct amount of arguments for rdonly\n");
-                    //break;
-                }
-
-                if (rdCount == -1)
-                {
-                    break;
-                }   */
-
-                if(optarg == NULL || (optarg[0] == '-' && optarg[1] == '-')) //would it actually equal null?
-                {
-                    fprintf( stderr, "Error: Missing file operand!\n" );
-                    optind--;
                     if (verboseTrue == 1)
                     {
                         printf("--rdonly\n");
                     }
+                    fprintf(stderr, "option '--rdonly' requires an argument\n");
+                    optind--;
                     break;
 
                 }
-                
-                if ( optind < argc && optarg[2] != '-')
-                {   
-                    printf("TACOS");
+
+                if (verboseTrue == 1)
+                {
+                    printf("--rdonly %s\n", optarg);
                 }
+
+                
+                /*if ((optind < argc && optarg[2] != '-'))
+                {
+                    printf("%d", optind);   
+                    printf("TACOS\n");
+                }*/
 
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
@@ -86,28 +65,29 @@ int parser(int argc, char** argv)
             }
             case 'w':
             {
-                //printf("wronly");
+                  if (optarg[0] == '-' && optarg[1] == '-')
+                {
+                    if (verboseTrue == 1)
+                    {
+                        printf("--wronly\n");
+                    }
+                    fprintf(stderr, "option '--wronly' requires an argument\n");
+                    optind--;
+                    break;
+
+                }
+
                 if (verboseTrue == 1)
                 {
-                    printf("--wronly %s\n", optarg); 
+                    printf("--wronly %s\n", optarg);
                 }
 
-                int wrCount = 0;
 
-                for (int i= 0; optind < argc; optind++)
+                /*if ((optind < argc && optarg[2] != '-'))
                 {
-                    if(argv[optind][0] == '-' && argv[optind][1] == '-'){
-                        //printf("Discovered new option: %s \n",argv[optind]);
-                        break;
-                    }
-                    wrCount++;
-                }
-
-                if (wrCount != 0)
-                {
-                    printf("Error: Not the correct amount of arguments for wronly\n");
-                    break;
-                }
+                    printf("%d", optind);   
+                    printf("TACOS\n");
+                }*/                
 
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
@@ -190,6 +170,8 @@ int parser(int argc, char** argv)
                 break;
             default:
                 abort();
+            case '?':
+                break;
         }
     }    
 }
