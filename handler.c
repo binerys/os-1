@@ -28,7 +28,21 @@ int statusCount = 0;
 void handle_fd(int fd)
 {
     fileDescriptors[fd_index] = fd;
+    printf("Value in array is: %d  at index %d \n", fileDescriptors[fd_index], fd_index);
     fd_index++;
+}
+
+/**
+ * Retrieves actual fd from fileDescriptors
+ * @param  index Simpsh FD
+ * @return       Actual file descriptor or -1 if does not exist 
+ */
+int get_fd(int index)
+{
+	if (index > fd_index)
+		return -1;
+	else
+		return fileDescriptors[index];
 }
 
 void add_pid(pid_t pid)
@@ -48,10 +62,31 @@ void add_status(int st)
  * @param  o    Output file descriptor
  * @param  e    Error file descriptor
  * @param  args Array of command and arguments
+ * @param  argsCount Number of args
  * @return      Temporarily an integer
  */
-int command(int i, int o, int e, char* args[])
+int command(int i, int o, int e, char* args[], int argsCount)
 {
+
+	// REDIRECTION: 
+	int new_input = get_fd(i);
+	int new_output = get_fd(o);
+	int new_error = get_fd(e);
+
+	printf("New_output fd is: %d \n", new_output);
+	printf("New_input fd is: %d \n", new_input);
+	printf("new_error fd is: %d \n", new_error);
+	if (new_error == -1 | new_output == -1 | new_input == -1){
+		printf("ERROR: file descriptors do not exist \n");
+	}
+
+	dup2(new_input,0);
+	dup2(new_output,1);
+	dup2(new_error,2);
+
+	close(new_output);
+	close(new_input);
+	close(new_error);
 
 	int status;
 	pid_t pid = fork();
@@ -75,11 +110,17 @@ int command(int i, int o, int e, char* args[])
 			if (waitpid(pid_list[pidCount-1], &status,0) == -1){
 				printf("ERROR: waitpid() failed");
 			}
-			if (WIFEXITED(status)){
-				status_list[statusCount-1] = WIFEXITED(status);
+			if (WEXITSTATUS(status)){
+				status_list[statusCount-1] = WEXITSTATUS(status);
 			}
 
-			printf("Finished process for command %s \n", args[0]);
+			// Print subcommand exit status
+			printf("%d",WEXITSTATUS(status));
+			for (int i = 0; i < argsCount; i++)
+			{
+				printf(" %s",args[i]);
+			}
+			printf("\n");
 			break;
 	}
 
