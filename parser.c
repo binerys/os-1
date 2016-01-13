@@ -8,6 +8,7 @@
 #include "handler.h"
 
 int verboseTrue = 0; 
+int exitStatus = 0;
  
 int parser(int argc, char** argv)
 {
@@ -42,6 +43,7 @@ int parser(int argc, char** argv)
                         printf("--rdonly\n");
                     }
                     fprintf(stderr, "option '--rdonly' requires an argument\n");
+                    exitStatus = 1;
                     optind--;
                     break;
 
@@ -70,6 +72,7 @@ int parser(int argc, char** argv)
                         printf("--wronly\n");
                     }
                     fprintf(stderr, "option '--wronly' requires an argument\n");
+                    exitStatus = 1;
                     optind--;
                     break;
 
@@ -178,4 +181,5 @@ int parser(int argc, char** argv)
                 break;
         }
     }    
+}
 }

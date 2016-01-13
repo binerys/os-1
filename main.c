@@ -4,8 +4,8 @@ int exit_status;
 
 int main(int argc, char** argv)
 {
-    parser(argc, argv);
+    exit_status = parser(argc, argv);
 
 
-    return 0;    
+    exit(exit_status);    
 }
