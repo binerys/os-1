@@ -9,7 +9,7 @@
 int open_rdonly_f (char* file)
 {
     int fd = open(file, O_RDONLY,644);
-    //printf("fd value is %d \n", fd);
+    printf("fd READ only value is %d \n", fd);
     if (fd == -1)
     {
         printf("Unable to open file as read-only.");
@@ -25,10 +25,10 @@ int open_rdonly_f (char* file)
 int open_wronly_f (char* file)
 {
     int fd = open(file, O_WRONLY,644);
-    printf("fd write only value is %d \n", fd);
+    printf("fd WRITE only value is %d \n", fd);
     if (fd == -1)
     {
-        printf("Unable to open file as read-only");
+        printf("Unable to open file as write-only");
         return -1;
     }    
     else

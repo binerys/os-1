@@ -33,7 +33,7 @@ int parser(int argc, char** argv)
         
         switch(a)
         {
-            case 'r':
+            case 'r': /* READ ONLY */
             { 
                 if (optarg[0] == '-' && optarg[1] == '-') 
                 {
@@ -48,7 +48,6 @@ int parser(int argc, char** argv)
                 }
 
                 if (verboseTrue == 1)
-                {
                     printf("--rdonly %s\n", optarg);
                 
                 /*if ((optind < argc && optarg[2] != '-'))
@@ -56,12 +55,11 @@ int parser(int argc, char** argv)
                     printf("%d", optind);   
                     printf("TACOS\n");
                 }*/
-
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
             }
-            case 'w':
+            case 'w': /* WRITE ONLY */
             {
                   if (optarg[0] == '-' && optarg[1] == '-')
                 {
@@ -179,4 +177,4 @@ int parser(int argc, char** argv)
         }
     }    
 }
-}
+
