@@ -2,6 +2,6 @@
 #define HANDLER_H
 
 void handle_fd(int fd);
-char* optArgString(char *a, char *b);
+int command(int i, int o, int e, char* args[]);
 
 #endif
