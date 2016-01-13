@@ -160,7 +160,7 @@ int parser(int argc, char** argv)
 
                 // Append null pointer to cmdArgs
                 cmdArgs[cmdArgsCount] = NULL;
-                command(input,output,error,cmdArgs);
+                command(input,output,error,cmdArgs,cmdArgsCount);
 
                 break;
             case 'v':
@@ -178,4 +178,5 @@ int parser(int argc, char** argv)
                 break;
         }
     }    
+}
 }
