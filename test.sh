@@ -1,16 +1,35 @@
 #!/bin/sh
 
+touch a
 touch b
 touch c
 
-#echo " a b c d e" > $a
+# TEST 1
+./simpsh --rdonly a
+if [ $? -eq 0 ] 
+	then
+		exit 0
+	else
+		echo "make check failed - rdonly"
+		exit 1
+fi
 
-./simpsh --rdonly --rdonly a 2>&1 | grep "option '--rdonly' requires an argument" > /dev/null ||{ echo "option '--rdonly' requires an argument"; exit 1; }
+# TEST 2
+./simpsh --rdonly a --wronly b --wronly c --command 0 1 2 echo a 
+if [ $? -eq 0 ] 
+	then
+		exit 0
+	else
+		echo "make check failed - command"
+		exit 1
+fi
 
-touch a
-
-./simpsh --rdonly a --wronly b --wronly c --command 0 1 2 echo a | grep "a" b > /dev/null || { echo "--command: execute 'echo' "; exit 1;}
-
-./simpsh --verbose --wronly c 2>&1 | grep "--wronly c" > /dev/null || { echo "--verbose print out --wronly c"; exit 1;}
-
-
+# TEST 3
+./simpsh --rdonly --rdonly
+if [ $? -eq 1 ] 
+	then
+		exit 0
+	else
+		echo "make check did not catch error"
+		exit 1
+fi

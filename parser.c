@@ -52,7 +52,7 @@ int parser(int argc, char** argv)
                     {
                         printf("--wronly\n");
                     }
-                    fprintf(stderr, "option '--wronly' requires an argument \n");
+                    fprintf(stderr, "option '--rdonly' requires an argument \n");
                     exitStatus = 1;
                    // optind--;
                     break;
