@@ -46,34 +46,7 @@ int parser(int argc, char** argv)
         {
             case 'r': /* READ ONLY */
             { 
-                if (optarg[0] == '-' && optarg[1] == '-') 
-                {
-                    if (verboseTrue == 1)
-                    {
-                        printf("--rdonly \n");
-                    }
-                    fprintf(stderr, "option '--rdonly' requires an argument \n");
-                    exitStatus = 1;
-                    optind--;
-                    break;
-                }
-
-                if (verboseTrue == 1)
-                    printf("--rdonly %s\n", optarg);
-                
-                if ((optind < argc && optarg[2] != '-'))
-                {
-                    //printf("%d", optind);   
-                    //printf("TACOS\n");
-                    exitStatus = 1;
-                }
-                fd = open_rdonly_f(optarg);
-                handle_fd(fd); 
-                break;
-            }
-            case 'w': /* WRITE ONLY */
-            {
-                  if (optarg[0] == '-' && optarg[1] == '-')
+                if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     if (verboseTrue == 1)
                     {
@@ -81,23 +54,58 @@ int parser(int argc, char** argv)
                     }
                     fprintf(stderr, "option '--wronly' requires an argument \n");
                     exitStatus = 1;
-                    optind--;
+                   // optind--;
                     break;
                 }
+
+                if (verboseTrue == 1)
+                    printf("--rdonly %s\n", optarg);
+                
+                if ((optind < argc && argv[optind][0] != '-'))
+                {
+                    exitStatus = 1;
+                }  
+                /*
+                if ((optind < argc && optarg[2] != '-'))
+                {
+                    //printf("%d", optind);   
+                    //printf("TACOS\n");
+                    exitStatus = 1;
+                }
+                */
+                fd = open_rdonly_f(optarg);
+                handle_fd(fd); 
+                break;
+            }
+            case 'w': /* WRITE ONLY */
+            {
+                
+                if (optarg[0] == '-' && optarg[1] == '-')
+                {
+                    if (verboseTrue == 1)
+                    {
+                        printf("--wronly\n");
+                    }
+                    fprintf(stderr, "option '--wronly' requires an argument \n");
+                    exitStatus = 1;
+                   // optind--;
+                    break;
+                }
+                
 
                 if (verboseTrue == 1)
                 {
                     printf("--wronly %s \n", optarg);
                 }
 
-
-                if ((optind < argc && optarg[2] != '-'))
+                
+                
+                if ((optind < argc && argv[optind][0] != '-'))
                 {
-                    //printf("%d", optind);   
-                    //printf("TACOS\n");
                     exitStatus = 1;
-                }                
-
+                }  
+                
+                
                 fd = open_wronly_f(optarg);
                 handle_fd(fd);
                 break;
