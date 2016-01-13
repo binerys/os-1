@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "parser.h"
 
 int exit_status;
