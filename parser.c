@@ -178,6 +178,7 @@ int parser(int argc, char** argv)
             case '?':
                 break;
         }
-    }    
+    }
+    return exitStatus;    
 }
 
