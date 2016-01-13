@@ -50,8 +50,6 @@ int parser(int argc, char** argv)
                 if (verboseTrue == 1)
                 {
                     printf("--rdonly %s\n", optarg);
-                }
-
                 
                 /*if ((optind < argc && optarg[2] != '-'))
                 {
@@ -115,7 +113,7 @@ int parser(int argc, char** argv)
                     // Go through command args until we reach a new option
                     if(argv[optind][0] == '-' && argv[optind][1] == '-')
                     {
-                        printf("Discovered new option: %s \n",argv[optind]);
+                        //printf("Discovered new option: %s \n",argv[optind]);
                         break;
                     }
 
@@ -145,6 +143,7 @@ int parser(int argc, char** argv)
                         cmdArgsLen = strlen(argv[optind]);
                         cmdArgs[cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
                         strcpy(cmdArgs[cmdArgsIndex], argv[optind]);
+                        cmdArgs[cmdArgsIndex][cmdArgsLen+1] = '\n';
                         cmdArgsIndex++;
                         cmdArgsCount++;
                     }
@@ -154,9 +153,14 @@ int parser(int argc, char** argv)
 
                 if(fdArgsCount != 3)
                     printf("Error: Too little arguments");
+                if(input == -1 | output == -1 | error == -1)
+                {
+                    printf("Error: Command args incorrectly set");
+                }
 
-                // Append null byte to cmdArgs
-                cmdArgs[cmdArgsCount] = "\0";
+                // Append null pointer to cmdArgs
+                cmdArgs[cmdArgsCount] = NULL;
+                command(input,output,error,cmdArgs);
 
                 break;
             case 'v':
