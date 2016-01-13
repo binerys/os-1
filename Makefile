@@ -12,7 +12,7 @@ simpsh: $(OBJ)
 
 #tests: 
 check:
-    ./test.sh
+	./test.sh
 
 #dist: lab1-GarimaLunawatBreannaNery.tar.gz
 #sources: Makefile main.c
