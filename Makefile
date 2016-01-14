@@ -16,8 +16,11 @@ check:
 	./test.sh
 
 dist: lab1-GarimaLunawatBreannaNery.tar.gz
-lab1-GarimaLunawatBreannaNery.tar.gz: $(SOURCES) 
-	tar -czf $@ $(SOURCES)
+lab1-GarimaLunawatBreannaNery.tar.gz: $(SOURCES)
+    mkdir lab1-GarimaLunawatBreannaNery
+    cp $(SOURCES) lab1-GarimaLunawatBreannaNery
+	tar -czf $@ lab1-GarimaLunawatBreannaNery
+    rm -r lab1-GarimaLunawatBreannaNery
 
 clean:
 	rm -f *.o *.so *.so.* simpsh lab1-GarimaLunawatBreannaNery.tar.gz
