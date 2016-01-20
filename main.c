@@ -10,6 +10,7 @@ int exit_status;
 int main(int argc, char** argv)
 {
 	initialize(argc, argv);
-    //exit_status = parser(argc, argv);
+    exit_status = parser(argc, argv);
+    terminate();
     return exit_status;    
 }

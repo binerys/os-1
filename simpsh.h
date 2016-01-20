@@ -22,10 +22,13 @@ int *fds;
 /* FUNCTIONS */
 /////////////////////////////////
 
-/*
-	initialize: 
+/*	initialize: 
 	- allocates arrays with appropriate sizes
  */
 void initialize(int argc, char** argv);
 
+/* terminate:
+	- frees all dynamically allocated arrays
+ */
+void terminate();
 #endif

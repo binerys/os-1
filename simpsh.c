@@ -39,6 +39,7 @@ void initialize(int argc, char** argv)
 			case 'o': //PIPE
 			{
 				fdCount++;
+				fdCount++;
 				break;
 			}
 			case '?':
@@ -55,8 +56,12 @@ void initialize(int argc, char** argv)
 	fds = malloc(fdCount*sizeof(int));
 	optind = 0;
 
-	printf("The number of processes are: %d", procCount);
-	printf("The number of file descripters are: %d", fdCount);
 	return;
+}
+
+void terminate()
+{
+	free(proc);
+	free(fds);
 }
 

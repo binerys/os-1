@@ -6,6 +6,7 @@
 
 #include "handler.h"
 #include "parser.h"
+#include "simpsh.h"
 
 // fileDescriptors: Array of file descriptors created during simpsh usage
 // - Simpsh FD # (Array Index) -> Actual FD # (Index Value)
@@ -24,7 +25,8 @@ int pidCount = 0;
 
 void handle_fd(int fd)
 {
-    fileDescriptors[fd_index] = fd;
+    //fileDescriptors[fd_index] = fd;
+    fds[fd_index] = fd;
     fd_index++;
 }
 
@@ -37,8 +39,10 @@ int get_fd(int index)
 {
 	if (index > fd_index)
 		return -1;
-	else
-		return fileDescriptors[index];
+	else{
+		// return fileDescriptors[index];
+		return fds[index];
+	}
 }
 
 void add_pid(pid_t pid)
