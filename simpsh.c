@@ -19,20 +19,28 @@ void initialize(int argc, char** argv)
 		switch(ret)
 		{
 			case 'c': // COMMAND
+			{
 				procCount++;
 				break;
+			}
 			case 'r': // READ-ONLY
+			{
 				fdCount++;
 				break;
+			}
 			case 'w': // WRITE-ONLY
 				fdCount++;
 				break;
 			case 'd': // READ & WRITE
+			{
 				fdCount++;
 				break;
+			}
 			case 'o': //PIPE
+			{
 				fdCount++;
 				break;
+			}
 			case '?':
 				break;
 			default:
