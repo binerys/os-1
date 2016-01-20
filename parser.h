@@ -7,6 +7,16 @@
 static struct option long_options[] = 
 {
     // FILE FLAGS:
+    {"append", no_argument, 0 'p'},
+    {"cloexec", no_argument, 0, 'x'},
+    {"creat", no_argument, 0 'e'},
+    {"directory", no_argument, 0, 'i'},
+    {"dsync", no_argument, 0 'n'},
+    {"excl", no_argument, 0, 'l'},
+    {"nofollow", no_argument, 0 'f'},
+    {"rsync", no_argument, 0, 'y'},
+    {"sync", no_argument, 0 's'},
+    {"trunc", no_argument, 0, 't'},    
     
     // FILE OPENING:
     {"rdonly", required_argument, 0, 'r'},
