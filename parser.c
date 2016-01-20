@@ -27,15 +27,6 @@ int parser(int argc, char** argv)
         int a;  
         int fd;      
 
-        static struct option long_options[] = 
-        {
-            {"rdonly", required_argument, 0, 'r'},
-            {"wronly", required_argument, 0, 'w'},
-            {"command", required_argument, 0, 'c'},
-            {"verbose", no_argument, 0, 'v'},
-            {0,0,0,0} 
-        };
-
         int option_index = 0;
                 
         a = getopt_long (argc, argv, "", long_options, &option_index);
@@ -65,14 +56,6 @@ int parser(int argc, char** argv)
                 {
                     exitStatus = 1;
                 }  
-                /*
-                if ((optind < argc && optarg[2] != '-'))
-                {
-                    //printf("%d", optind);   
-                    //printf("TACOS\n");
-                    exitStatus = 1;
-                }
-                */
                 fd = open_rdonly_f(optarg);
                 handle_fd(fd); 
                 break;
@@ -110,7 +93,7 @@ int parser(int argc, char** argv)
                 handle_fd(fd);
                 break;
             }
-            case 'c':
+            case 'c': /* VERBOSE */
                 // Bring optind back one to read arguments 
                 optind--;
                
@@ -196,12 +179,16 @@ int parser(int argc, char** argv)
                 status_list[statusCount-1] = cmdStatus;
 
                 break;
-            case 'v':
+            case 'v': /* VERBOSE */
                 if (verboseTrue == 1)
                 {
                     printf("--verbose \n");
                 }
                 verboseTrue = 1;
+                break;
+
+            case 'a': // WAIT
+
                 break;
             default:
                 abort();
