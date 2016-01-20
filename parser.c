@@ -7,20 +7,13 @@
 #include "parser.h"
 #include "openF.h"
 #include "handler.h"
+#include "simpsh.h"
 
 int verboseTrue = 0; 
 int exitStatus = 0;
 
-int status_list[100];
-int statusCount = 0;
-
 int fileFlags[11];
 
-void add_status(int st)
-{
-    status_list[statusCount] = st; 
-    statusCount++;
-}
  
 int parser(int argc, char** argv)
 {
@@ -213,7 +206,6 @@ int parser(int argc, char** argv)
                 /*if (cmdStatus == -1) // FATAL ERROR - break parsing and return max exit status
                     loop = 0;
                 */
-                status_list[statusCount-1] = cmdStatus;
 
                 break;
             case 'v': /* VERBOSE */
