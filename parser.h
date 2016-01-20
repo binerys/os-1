@@ -22,7 +22,8 @@ static struct option long_options[] =
     {"rdonly", required_argument, 0, 'r'},
     {"wronly", required_argument, 0, 'w'},
     {"rdwr", required_argument, 0, 'd'},
-   
+    {"pipe", no_argument, 0, 'o'},
+
     // SUBCOMMANDS
     {"command", required_argument, 0, 'c'},
     {"wait", no_argument,0,'a'}, 
