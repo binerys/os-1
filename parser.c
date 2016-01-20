@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <getopt.h>
+#include <fcntl.h>
 
 #include "parser.h"
 #include "openF.h"
@@ -12,6 +13,8 @@ int exitStatus = 0;
 
 int status_list[100];
 int statusCount = 0;
+
+int fileFlags[11];
 
 void add_status(int st)
 {
@@ -35,6 +38,40 @@ int parser(int argc, char** argv)
         
         switch(a)
         {
+            case 'p':
+                fileFlags[0] = O_APPEND;
+                break;
+            case 'x':
+                fileFlags[1] = O_CLOEXEC;
+                break;
+            case 'e':
+                fileFlags[2] = O_CREAT;
+                break;
+            case 'i':
+                fileFlags[3] = O_DIRECTORY;
+                break;
+            case 'n':
+                fileFlags[4] = O_DSYNC;
+                break;
+            case 'l':
+                fileFlags[5] = O_EXCL;
+                break;
+            case 'f':
+                fileFlags[6] = O_NOFOLLOW;
+                break;
+            case 'b':
+                fileFlags[7] = O_NONBLOCK;
+                break;
+            case 'y':
+                fileFlags[8] = O_RSYNC;
+                break;
+            case 's':
+                fileFlags[9] = O_SYNC;
+                break;
+            case 't':
+                fileFlags[10] = O_TRUNC;
+                break;
+            
             case 'r': /* READ ONLY */
             { 
                 if (optarg[0] == '-' && optarg[1] == '-')
@@ -56,7 +93,7 @@ int parser(int argc, char** argv)
                 {
                     exitStatus = 1;
                 }  
-                fd = open_rdonly_f(optarg);
+                fd = open_rdonly_f(optarg, fileFlags);
                 handle_fd(fd); 
                 break;
             }
@@ -89,7 +126,7 @@ int parser(int argc, char** argv)
                 }  
                 
                 
-                fd = open_wronly_f(optarg);
+                fd = open_wronly_f(optarg, fileFlags);
                 handle_fd(fd);
                 break;
             }
