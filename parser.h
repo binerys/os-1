@@ -39,7 +39,7 @@ static struct option long_options[] =
     {"default",     required_argument, 0, 'u'},
     {"paste",       no_argument,       0, 'h'},
 
-    {0,0,0,0} 
+    {0,             0,                 0,  0} 
 };
 
 /////////////////////////////////
