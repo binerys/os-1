@@ -8,17 +8,10 @@
 #include "parser.h"
 #include "simpsh.h"
 
-// fd_index - Keeps track of Simpsh FD, begins at 0
+process	*proc;
+int *fds;
 int fd_index = 0;
-//--------------------------------------------------------//
-
-// COMMAND:
-int cmdCount = 0;
-
-pid_t pid_list[100];
-int pidCount = 0;
-
-
+int proc_index = 0;
 
 void handle_fd(int fd)
 {
@@ -42,8 +35,8 @@ int get_fd(int index)
 
 void add_pid(pid_t pid)
 {
-	pid_list[pidCount] = pid;
-	pidCount++;
+	proc[proc_index].pid = pid;
+	proc_index++;
 }
 
 /**
@@ -87,7 +80,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 				fprintf(stderr, "ERROR: Unable to execute command \n");
 				return -1; 
 			}
-			cmdCount++;
 			break;
 
 		case -1: // ERROR
@@ -97,8 +89,8 @@ int command(int i, int o, int e, char* args[], int argsCount)
 
 		default: // PARENT
 			/* Wait for child */
-			/*
 			add_pid(pid);
+			/*
 			if (waitpid(pid_list[pidCount-1], &status,0) == -1){
 				fprintf(stderr, "ERROR: waitpid() failed");
 				return -1;

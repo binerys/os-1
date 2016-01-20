@@ -6,7 +6,6 @@
 
 int exit_status;
 
-
 int main(int argc, char** argv)
 {
 	initialize(argc, argv);

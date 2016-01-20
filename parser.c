@@ -14,6 +14,10 @@ int exitStatus = 0;
 
 int fileFlags[11];
 
+#ifndef O_RSYNC
+    #define O_RSYNC O_SYNC
+#endif
+
  
 int parser(int argc, char** argv)
 {
