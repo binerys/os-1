@@ -1,8 +1,8 @@
 OPTIMIZE=-O2
 CC = gcc
 CFLAGS = $(OPTIMIZE) -g3 -std=gnu11
-DEPS = parser.h handler.h openF.h
-OBJ = main.o parser.o openF.o handler.o
+DEPS = parser.h handler.h openF.h simpsh.h
+OBJ = main.o parser.o openF.o handler.o simpsh.o
 SOURCES = Makefile main.c parser.h parser.c README.md openF.c openF.h handler.c handler.h test.sh 
 
 %.o: %.c $(DEPS)
