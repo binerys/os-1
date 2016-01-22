@@ -6,11 +6,20 @@
 
 int exit_status;
 
-
 int main(int argc, char** argv)
 {
-	initialize(argc, argv);
+	// Create a copy of argv for initial getopt to use
+	char** argCopy = malloc(argc*sizeof(char*)); 
+	int i; 
+	for (i=0;i<argc;i++)
+	{
+		argCopy[i] = argv[i];
+	}
+	
+	initialize(argc, argCopy);
     exit_status = parser(argc, argv);
     terminate();
+    
+    free(argCopy);
     return exit_status;    
 }

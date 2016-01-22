@@ -7,20 +7,21 @@
 #include "parser.h"
 #include "openF.h"
 #include "handler.h"
+#include "simpsh.h"
 
 int verboseTrue = 0; 
 int exitStatus = 0;
 
-int status_list[100];
-int statusCount = 0;
+char*** commands;
+int cmd_index = 0;
+#define MAX_ARGS 100
 
 int fileFlags[11];
 
-void add_status(int st)
-{
-    status_list[statusCount] = st; 
-    statusCount++;
-}
+#ifndef O_RSYNC
+    #define O_RSYNC O_SYNC
+#endif
+
  
 int parser(int argc, char** argv)
 {
@@ -191,11 +192,13 @@ int parser(int argc, char** argv)
                 int error = -1; 
 
                 // Command Args
-                char* cmdArgs[100];
+                // char* cmdArgs[100];
                 int cmdArgsLen = 0;
                 int cmdArgsIndex = 0; // Incrementer for cmdArgs
                 int cmdArgsCount = 0;
                 int cmdStatus;
+
+                commands[cmd_index] = malloc(MAX_ARGS*sizeof(char*));
 
                 for (int i= 0; optind < argc; optind++)
                 {
@@ -220,19 +223,31 @@ int parser(int argc, char** argv)
                         if(end == argv[optind]) // Not a digit
                             fprintf(stderr,"Error! Argument is not a digit! \n");
 
-                        if(i == 0)  input = temp;
-                        if(i == 1)  output = temp;
-                        if(i == 2)  error = temp; 
+                        if(i == 0)  
+                            input = temp;
+                        if(i == 1)  
+                            output = temp;
+                        if(i == 2) 
+                             error = temp; 
                         fdArgsCount++;
                     }
 
                     // Parse remaining cmd arguments
                     else 
                     {
+                        /*
                         cmdArgsLen = strlen(argv[optind]);
                         cmdArgs[cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
                         strcpy(cmdArgs[cmdArgsIndex], argv[optind]);
                         cmdArgs[cmdArgsIndex][cmdArgsLen+1] = '\n';
+                        cmdArgsIndex++;
+                        cmdArgsCount++;
+                        */
+
+                        cmdArgsLen = strlen(argv[optind]);
+                        commands[cmd_index][cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
+                        strcpy(commands[cmd_index][cmdArgsIndex], argv[optind]);
+                        commands[cmd_index][cmdArgsIndex][cmdArgsLen+1] = '\n';
                         cmdArgsIndex++;
                         cmdArgsCount++;
                     }
@@ -248,22 +263,23 @@ int parser(int argc, char** argv)
                 }
 
                 // Append null pointer to cmdArgs
-                cmdArgs[cmdArgsCount] = NULL;
+                //cmdArgs[cmdArgsCount] = NULL;
+                commands[cmd_index][cmdArgsCount] = NULL;
+
+
                 if( verboseTrue == 1)
                 {
                     printf("--commmand");
                     for (int j = 0; j < cmdArgsCount; j++)
                     {
-                        printf(" %s",cmdArgs[j]);
+                        // printf(" %s",cmdArgs[j]);
+                        printf(" %s", commands[cmd_index][j]);
                     }
                     printf("\n");
                 }
-                cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
-                /*if (cmdStatus == -1) // FATAL ERROR - break parsing and return max exit status
-                    loop = 0;
-                */
-                status_list[statusCount-1] = cmdStatus;
-
+                // cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
+                cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
+                cmd_index++;
                 break;
             case 'v': /* VERBOSE */
                 if (verboseTrue == 1)
@@ -274,7 +290,7 @@ int parser(int argc, char** argv)
                 break;
 
             case 'a': // WAIT
-
+                p_wait();
                 break;
             default:
                 abort();

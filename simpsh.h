@@ -5,18 +5,23 @@
 /* GLOBALS */
 /////////////////////////////////
 
-// Flags
+// Counters
+
+// Index variable
+extern int fd_index;
+extern int proc_index;
 
 // Data Structures
 typedef struct process {
 	pid_t pid; 
 	int status;
+	char** cmd;
+	int cmdCount;  
 } process;
 
-// Process Array
-process	*proc; 
-// File Descriptor Array
-int *fds; 
+extern process	*proc; // Process Array
+extern int *fds; // File Descriptor Array
+extern char*** commands; // Array of all commandså
 
 /////////////////////////////////
 /* FUNCTIONS */
