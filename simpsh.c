@@ -48,7 +48,7 @@ void initialize(int argc, char** argv)
 			case -1:
 				break;
 			default:
-				abort();
+				break;
 		}
 	}
 
