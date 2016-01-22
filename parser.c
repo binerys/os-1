@@ -25,6 +25,11 @@ void add_status(int st)
 int parser(int argc, char** argv)
 {
     int loop = 1;
+    for (int i = 0; i < 11; i++)
+    {
+        fileFlags[i] = 0;
+    }
+
     while (loop)
     {
         int a;  
