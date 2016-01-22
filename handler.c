@@ -10,6 +10,8 @@
 
 process	*proc;
 int *fds;
+
+
 int fd_index = 0;
 int proc_index = 0;
 
@@ -52,6 +54,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	if (new_error == -1 | new_output == -1 | new_input == -1){
 		fprintf(stderr, "ERROR: File descriptors do not exist \n");
 	}
+
 
 	dup2(new_input,0);
 	dup2(new_output,1);

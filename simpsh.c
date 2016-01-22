@@ -8,7 +8,9 @@
 
 void initialize(int argc, char** argv)
 {
-	int ret, fdCount = 0, procCount = 0;
+	int ret; 
+	int procCount = 0;
+	int fdCount = 0;
 	int option_index = 0, loop = 1; 
 	
 	while(loop)
@@ -44,7 +46,6 @@ void initialize(int argc, char** argv)
 			}
 			case '?':
 				break;
-
 			case -1:
 				break;
 			default:
@@ -53,6 +54,7 @@ void initialize(int argc, char** argv)
 	}
 
 	proc = malloc(procCount*sizeof(process));
+	commands = malloc(procCount*sizeof(char**));
 	fds = malloc(fdCount*sizeof(int));
 	optind = 1;
 
@@ -63,6 +65,6 @@ void terminate()
 {
 	free(proc);
 	free(fds);
-
+	free(commands);
 }
 

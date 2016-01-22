@@ -12,6 +12,10 @@
 int verboseTrue = 0; 
 int exitStatus = 0;
 
+char*** commands;
+int cmd_index = 0;
+#define MAX_ARGS 100
+
 int fileFlags[11];
 
 #ifndef O_RSYNC
@@ -139,11 +143,13 @@ int parser(int argc, char** argv)
                 int error = -1; 
 
                 // Command Args
-                char* cmdArgs[100];
+                // char* cmdArgs[100];
                 int cmdArgsLen = 0;
                 int cmdArgsIndex = 0; // Incrementer for cmdArgs
                 int cmdArgsCount = 0;
                 int cmdStatus;
+
+                commands[cmd_index] = malloc(MAX_ARGS*sizeof(char*));
 
                 for (int i= 0; optind < argc; optind++)
                 {
@@ -180,10 +186,19 @@ int parser(int argc, char** argv)
                     // Parse remaining cmd arguments
                     else 
                     {
+                        /*
                         cmdArgsLen = strlen(argv[optind]);
                         cmdArgs[cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
                         strcpy(cmdArgs[cmdArgsIndex], argv[optind]);
                         cmdArgs[cmdArgsIndex][cmdArgsLen+1] = '\n';
+                        cmdArgsIndex++;
+                        cmdArgsCount++;
+                        */
+
+                        cmdArgsLen = strlen(argv[optind]);
+                        commands[cmd_index][cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
+                        strcpy(commands[cmd_index][cmdArgsIndex], argv[optind]);
+                        commands[cmd_index][cmdArgsIndex][cmdArgsLen+1] = '\n';
                         cmdArgsIndex++;
                         cmdArgsCount++;
                     }
@@ -199,17 +214,23 @@ int parser(int argc, char** argv)
                 }
 
                 // Append null pointer to cmdArgs
-                cmdArgs[cmdArgsCount] = NULL;
+                //cmdArgs[cmdArgsCount] = NULL;
+                commands[cmd_index][cmdArgsCount] = NULL;
+
+
                 if( verboseTrue == 1)
                 {
                     printf("--commmand");
                     for (int j = 0; j < cmdArgsCount; j++)
                     {
-                        printf(" %s",cmdArgs[j]);
+                        // printf(" %s",cmdArgs[j]);
+                        printf(" %s", commands[cmd_index][j]);
                     }
                     printf("\n");
                 }
-                cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
+                // cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
+                cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
+                cmd_index++;
                 break;
             case 'v': /* VERBOSE */
                 if (verboseTrue == 1)

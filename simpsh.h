@@ -5,6 +5,8 @@
 /* GLOBALS */
 /////////////////////////////////
 
+// Counters
+
 // Index variable
 extern int fd_index;
 extern int proc_index;
@@ -19,6 +21,7 @@ typedef struct process {
 
 extern process	*proc; // Process Array
 extern int *fds; // File Descriptor Array
+extern char*** commands; // Array of all commandså
 
 /////////////////////////////////
 /* FUNCTIONS */
