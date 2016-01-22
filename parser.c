@@ -44,36 +44,80 @@ int parser(int argc, char** argv)
         switch(a)
         {
             case 'p':
+                if (verboseTrue == 1)
+                {
+                    printf("--append\n");
+                }
                 fileFlags[0] = O_APPEND;
                 break;
             case 'x':
+                if (verboseTrue == 1)
+                {
+                    printf("--cloexec\n");
+                }
                 fileFlags[1] = O_CLOEXEC;
                 break;
             case 'e':
+                if (verboseTrue == 1)
+                {
+                    printf("--creat\n");
+                } 
                 fileFlags[2] = O_CREAT;
                 break;
             case 'i':
+                if (verboseTrue == 1)
+                {
+                    printf("--directory\n");
+                }
                 fileFlags[3] = O_DIRECTORY;
                 break;
             case 'n':
+                if (verboseTrue == 1)
+                {
+                    printf("--dsync\n");
+                }
                 fileFlags[4] = O_DSYNC;
                 break;
             case 'l':
+                if (verboseTrue == 1)
+                {
+                    printf("--excl\n");
+                }
                 fileFlags[5] = O_EXCL;
                 break;
             case 'f':
+                if (verboseTrue == 1)
+                {
+                    printf("--nofollow\n");
+                }
                 fileFlags[6] = O_NOFOLLOW;
                 break;
             case 'b':
+                if (verboseTrue == 1)
+                {
+                    printf("--nonblock\n");
+                }
                 fileFlags[7] = O_NONBLOCK;
                 break;
             case 'y':
+                if (verboseTrue == 1)
+                {
+                    printf("--rsync\n");
+                }
                 fileFlags[8] = O_RSYNC;
                 break;
             case 's':
+                if (verboseTrue == 1)
+                {
+                    printf("--sync\n");
+                }
                 fileFlags[9] = O_SYNC;
                 break;
             case 't':
+                if (verboseTrue == 1)
+                {
+                    printf("--trunc\n");
+                }
                 fileFlags[10] = O_TRUNC;
                 break;
             
