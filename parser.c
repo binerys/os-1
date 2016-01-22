@@ -221,7 +221,7 @@ int parser(int argc, char** argv)
                 break;
 
             case 'a': // WAIT
-
+                p_wait();
                 break;
             default:
                 abort();

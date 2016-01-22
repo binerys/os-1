@@ -13,6 +13,8 @@ extern int proc_index;
 typedef struct process {
 	pid_t pid; 
 	int status;
+	char** cmd;
+	int cmdCount;  
 } process;
 
 extern process	*proc; // Process Array

@@ -33,21 +33,14 @@ int get_fd(int index)
 	}
 }
 
-void add_pid(pid_t pid)
+void add_proc(pid_t pid, char** command, int commandCount)
 {
 	proc[proc_index].pid = pid;
+	proc[proc_index].cmd = command;
+	proc[proc_index].cmdCount = commandCount;
 	proc_index++;
 }
 
-/**
- * Implementation of the command option
- * @param  i    Input file descriptor
- * @param  o    Output file descriptor
- * @param  e    Error file descriptor
- * @param  args Array of command and arguments
- * @param  argsCount Number of args
- * @return      Temporarily an integer
- */
 int command(int i, int o, int e, char* args[], int argsCount)
 {
 
@@ -89,7 +82,8 @@ int command(int i, int o, int e, char* args[], int argsCount)
 
 		default: // PARENT
 			/* Wait for child */
-			add_pid(pid);
+			add_proc(pid,args,argsCount);
+
 			/*
 			if (waitpid(pid_list[pidCount-1], &status,0) == -1){
 				fprintf(stderr, "ERROR: waitpid() failed");
@@ -113,5 +107,27 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	}
 
 	return ret;
+}
+
+int p_wait()
+{
+	int i;
+	int status;
+	for (i = 0; i <= proc_index; i++)
+	{
+		if(waitpid(proc[i].pid, &status, 0) == -1)
+			return -1;
+		if (WIFEXITED(status))
+			proc[i].status = WEXITSTATUS(status);
+
+		printf("%d", proc[i].status);
+		int j;
+		for(j = 0; j < proc[i].cmdCount; j++)
+		{
+			printf(" %s", proc[i].cmd[i]);
+		}
+		printf("\n");
+	}
+	return 0;
 }
 
