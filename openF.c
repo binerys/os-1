@@ -21,7 +21,7 @@ int setFlags (int flags[])
 int open_rdonly_f (char* file, int flags[])
 {
     flagsNum = setFlags(flags) | O_RDONLY;
-    int fd = open(file, flagsNum ,644);
+    int fd = open(file, flagsNum, 0644);
     if (fd == -1)
     {
         fprintf(stderr, "ERROR: Unable to open file as read-only. \n");
@@ -37,7 +37,7 @@ int open_rdonly_f (char* file, int flags[])
 int open_wronly_f (char* file, int flags[])
 {
     flagsNum = setFlags(flags) | O_WRONLY;
-    int fd = open(file, flagsNum ,644);
+    int fd = open(file, flagsNum, 0644);
     if (fd == -1)
     {
         fprintf(stderr, "ERROR: Unable to open file as write-only \n");
@@ -49,3 +49,21 @@ int open_wronly_f (char* file, int flags[])
     }
 
 }
+
+//Open file and read and write
+int open_rdwr_f (char* file, int flags[])
+{
+    flagsNum = setFlags(flags) | O_RDWR;
+    int fd = open(file, flagsNum, 0644);
+    if (fd == -1)
+    {
+        fprintf(stderr, "ERROR: Unable to open file as read and write \n");
+        return -1;
+    }
+    else
+    {
+        return fd;
+    }
+
+}
+
