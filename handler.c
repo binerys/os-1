@@ -83,26 +83,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		default: // PARENT
 			/* Wait for child */
 			add_proc(pid,args,argsCount);
-
-			/*
-			if (waitpid(pid_list[pidCount-1], &status,0) == -1){
-				fprintf(stderr, "ERROR: waitpid() failed");
-				return -1;
-			}
-			if (WEXITSTATUS(status)){
-				ret = WEXITSTATUS(status);
-			}
-			*/
-			// Print subcommand exit status
-			/*
-			printf("%d",ret);
-			for (int i = 0; i < argsCount; i++)
-			{
-				printf(" %s",args[i]);
-			}
-			printf("\n");
-			*/
-
 			break;
 	}
 
@@ -124,7 +104,7 @@ int p_wait()
 		int j;
 		for(j = 0; j < proc[i].cmdCount; j++)
 		{
-			printf(" %s", proc[i].cmd[i]);
+			printf(" %s", proc[i].cmd[j]);
 		}
 		printf("\n");
 	}

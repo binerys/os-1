@@ -168,9 +168,12 @@ int parser(int argc, char** argv)
                         if(end == argv[optind]) // Not a digit
                             fprintf(stderr,"Error! Argument is not a digit! \n");
 
-                        if(i == 0)  input = temp;
-                        if(i == 1)  output = temp;
-                        if(i == 2)  error = temp; 
+                        if(i == 0)  
+                            input = temp;
+                        if(i == 1)  
+                            output = temp;
+                        if(i == 2) 
+                             error = temp; 
                         fdArgsCount++;
                     }
 
@@ -207,10 +210,6 @@ int parser(int argc, char** argv)
                     printf("\n");
                 }
                 cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
-                /*if (cmdStatus == -1) // FATAL ERROR - break parsing and return max exit status
-                    loop = 0;
-                */
-
                 break;
             case 'v': /* VERBOSE */
                 if (verboseTrue == 1)

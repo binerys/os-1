@@ -54,7 +54,7 @@ void initialize(int argc, char** argv)
 
 	proc = malloc(procCount*sizeof(process));
 	fds = malloc(fdCount*sizeof(int));
-	optind = 0;
+	optind = 1;
 
 	return;
 }
@@ -63,5 +63,6 @@ void terminate()
 {
 	free(proc);
 	free(fds);
+
 }
 
