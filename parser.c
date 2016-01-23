@@ -180,7 +180,7 @@ int parser(int argc, char** argv)
                 handle_fd(fd);
                 break;
             }
-            case 'c': /* VERBOSE */
+            case 'c': /* COMMAND */
                 // Bring optind back one to read arguments 
                 optind--;
                
@@ -294,7 +294,12 @@ int parser(int argc, char** argv)
                 {
                     printf("--wait \n");
                 }
-                p_wait();
+                if( p_wait() == -1 )
+                    fprintf(stderr, "ERROR: Unable to wait on a process");
+                break;
+
+            case 'o': // PIPE
+
                 break;
             default:
                 abort();
