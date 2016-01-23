@@ -114,3 +114,12 @@ int p_wait()
 	return 0;
 }
 
+int create_pipe()
+{
+	int pfd[2];
+	if( pipe(pfd) == -1)
+		return -1;
+	handle_fd(pfd[0]); // Read end
+	handle_fd(pfd[1]); // Write End
+
+}

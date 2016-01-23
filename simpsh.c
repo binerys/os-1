@@ -9,8 +9,8 @@
 void initialize(int argc, char** argv)
 {
 	int ret; 
-	int procCount = 0;
-	int fdCount = 0;
+	procCount = 0;
+	fdCount = 0;
 	int option_index = 0, loop = 1; 
 	
 	while(loop)
@@ -63,8 +63,17 @@ void initialize(int argc, char** argv)
 
 void terminate()
 {
+	int i, j;
+	for(i = 0; i < procCount; i++)
+	{
+		for (j=0; j < proc[i].cmdCount; j++)
+		{
+			free(proc[i].cmd[j]);
+		}
+		free(proc[i].cmd);
+	}
+	free(commands);
 	free(proc);
 	free(fds);
-	free(commands);
 }
 

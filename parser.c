@@ -299,7 +299,7 @@ int parser(int argc, char** argv)
                 break;
 
             case 'o': // PIPE
-
+                create_pipe();
                 break;
             default:
                 abort();
