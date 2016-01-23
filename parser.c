@@ -290,6 +290,10 @@ int parser(int argc, char** argv)
                 break;
 
             case 'a': // WAIT
+                if (verboseTrue == 1)
+                {
+                    printf("--wait \n");
+                }
                 p_wait();
                 break;
             default:
