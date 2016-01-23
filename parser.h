@@ -37,7 +37,7 @@ static struct option long_options[] =
     {"catch",       required_argument, 0, 'g'},
     {"ignore",      required_argument, 0, 'q'},    
     {"default",     required_argument, 0, 'u'},
-    {"paste",       no_argument,       0, 'h'},
+    {"pause",       no_argument,       0, 'h'},
 
     {0,             0,                 0,  0} 
 };

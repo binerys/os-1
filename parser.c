@@ -292,6 +292,14 @@ int parser(int argc, char** argv)
             case 'a': // WAIT
                 p_wait();
                 break;
+            case 'z': /* ABORT */
+                crash();
+                break;
+            case 'q':
+                break;
+            case 'h':
+                pause();
+                break;
             default:
                 abort();
             case '?':
