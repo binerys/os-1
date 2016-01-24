@@ -114,6 +114,7 @@ int p_wait()
 		close(fds[s]);
 	}
 
+/*
 	for (i = 0; i < procCount; i++)
 	{
 		if(waitpid(proc[i].pid, &status, 0) == -1)
@@ -131,6 +132,8 @@ int p_wait()
 		}
 		printf("\n");
 	}
+*/
+	
 	return 0;
 }
 
