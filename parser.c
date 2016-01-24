@@ -339,6 +339,7 @@ int parser(int argc, char** argv)
                     sigprocmask(SIG_UNBLOCK, &ss, NULL)
                     goto skip;
                 }
+                skip:
                 break;
             case 'u': /* DEFAULT */
                 if (verboseTrue == 1)
