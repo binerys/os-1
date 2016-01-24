@@ -3,6 +3,8 @@
 #include <string.h>
 #include <getopt.h>
 #include <fcntl.h>
+#include <signal.h>
+#include <unistd.h>
 
 #include "parser.h"
 #include "openF.h"
@@ -293,11 +295,43 @@ int parser(int argc, char** argv)
                 p_wait();
                 break;
             case 'z': /* ABORT */
-                crash();
+                if (verboseTrue == 1)
+                {
+                    printf("--abort \n");
+                }
+                volatile int *a = NULL;
+                int b = *a;
+                //raise(11);
                 break;
-            case 'q':
+            case 'q': /* IGNORE */
+                 if (verboseTrue == 1)
+                {
+                    printf("--ignore \n");
+                }
+                struct sigaction i;
+                i.sa_handler = SIG_IGN;
+                sigemptyset(&i.sa_mask);
+                i.sa_flags = 0;
+                //need to chekc if optarg exists first?
+                sigaction (atoi(optarg), &i, NULL);
                 break;
-            case 'h':
+            case 'u': /*DEFAULT need testing*/
+                if (verboseTrue == 1)
+                {
+                    printf("--default \n");
+                }
+                struct sigaction d;
+                d.sa_handler = SIG_DFL;
+                sigemptyset(&d.sa_mask);
+                d.sa_flags = 0;
+                //need to chekc if optarg exists first?
+                sigaction (atoi(optarg), &d, NULL);
+                break;
+            case 'h': /*PAUSE */
+                if (verboseTrue == 1)
+                {
+                    printf("--pause \n");
+                }
                 pause();
                 break;
             default:
