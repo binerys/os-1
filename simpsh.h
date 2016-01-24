@@ -6,8 +6,8 @@
 /////////////////////////////////
 
 // Counters
-int procCount;
-int fdCount;
+extern int procCount;
+extern int fdCount;
 // Index variable
 extern int fd_index;
 extern int proc_index;
@@ -19,8 +19,6 @@ typedef struct process {
 	char** cmd; // Points to process's command in commads array
 	int cmdCount;  
 } process;
-
-
 
 extern process	*proc; // Process Array
 extern int *fds; // File Descriptor Array

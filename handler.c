@@ -15,6 +15,9 @@ int *fds;
 int fd_index = 0;
 int proc_index = 0;
 
+int fdCount;
+int procCount;
+
 void handle_fd(int fd)
 {
     fds[fd_index] = fd;
@@ -55,15 +58,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		fprintf(stderr, "ERROR: File descriptors do not exist \n");
 	}
 
-
-	dup2(new_input,0);
-	dup2(new_output,1);
-	dup2(new_error,2);
-
-	close(new_output);
-	close(new_input);
-	close(new_error);
-
 	int status;
 	int ret = 0;
 	pid_t pid = fork();
@@ -76,6 +70,19 @@ int command(int i, int o, int e, char* args[], int argsCount)
 				fprintf(stderr, "ERROR: Unable to execute command \n");
 				return -1; 
 			}
+
+			// Set redirects for the child
+			dup2(new_input,0);
+			dup2(new_output,1);
+			dup2(new_error,2);
+
+			// Close remaining file descriptors
+			int i;
+			for (i = 0; i < fdCount; i++)
+			{
+				if (fds[i] != i || fds[i] != o || fds[i] != e)
+					close(get_fd(fds[i]));
+			}
 			break;
 
 		case -1: // ERROR
@@ -86,9 +93,11 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		default: // PARENT
 			/* Wait for child */
 			add_proc(pid,args,argsCount);
+			close(new_output);
+			close(new_input);
+			close(new_error);
 			break;
 	}
-
 	return ret;
 }
 
