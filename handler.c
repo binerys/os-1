@@ -15,6 +15,9 @@ int *fds;
 int fd_index = 0;
 int proc_index = 0;
 
+int fdCount;
+int procCount;
+
 void handle_fd(int fd)
 {
     fds[fd_index] = fd;
@@ -55,15 +58,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		fprintf(stderr, "ERROR: File descriptors do not exist \n");
 	}
 
-
-	dup2(new_input,0);
-	dup2(new_output,1);
-	dup2(new_error,2);
-
-	close(new_output);
-	close(new_input);
-	close(new_error);
-
 	int status;
 	int ret = 0;
 	pid_t pid = fork();
@@ -71,11 +65,25 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	switch(pid)
 	{
 		case 0: // CHILD PROCESS
+
+			// Set redirects for the child
+			dup2(new_input,0);
+			dup2(new_output,1);
+			dup2(new_error,2);
+
+			// Close remaining file descriptors
+			int s;
+			for (s = 0; s < fdCount; s++)
+			{
+				if (s != i && s != o && s != e)
+					close(fds[s]);
+			}
 			/* Execute Command */
 			if(execvp(args[0], args) == -1){
 				fprintf(stderr, "ERROR: Unable to execute command \n");
 				return -1; 
 			}
+
 			break;
 
 		case -1: // ERROR
@@ -86,9 +94,11 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		default: // PARENT
 			/* Wait for child */
 			add_proc(pid,args,argsCount);
+			/*close(new_output);
+			close(new_input);
+			close(new_error);*/
 			break;
 	}
-
 	return ret;
 }
 
@@ -96,7 +106,15 @@ int p_wait()
 {
 	int i;
 	int status;
-	for (i = 0; i <= proc_index; i++)
+
+	// Infinite waiting fix - Close all file descriptors
+	int s;
+	for (s = 0; s < fdCount; s++)
+	{
+		close(fds[s]);
+	}
+
+	for (i = 0; i < procCount; i++)
 	{
 		if(waitpid(proc[i].pid, &status, 0) == -1)
 			return -1;
@@ -104,6 +122,8 @@ int p_wait()
 			proc[i].status = WEXITSTATUS(status);
 
 		printf("%d", proc[i].status);
+
+		// Print out all of the command's args
 		int j;
 		for(j = 0; j < proc[i].cmdCount; j++)
 		{
@@ -114,3 +134,13 @@ int p_wait()
 	return 0;
 }
 
+int create_pipe()
+{
+	int pfd[2];
+	if( pipe(pfd) == -1)
+		return -1;
+	handle_fd(pfd[0]); // Read end
+	handle_fd(pfd[1]); // Write End
+	return 0;
+
+}
