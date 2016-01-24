@@ -72,11 +72,11 @@ int command(int i, int o, int e, char* args[], int argsCount)
 			dup2(new_error,2);
 
 			// Close remaining file descriptors
-			int i;
-			for (i = 0; i < fdCount; i++)
+			int s;
+			for (s = 0; s < fdCount; s++)
 			{
-				if (fds[i] != i && fds[i] != o && fds[i] != e)
-					close(get_fd(fds[i]));
+				if (fds[s] != i && fds[s] != o && fds[s] != e)
+					close(get_fd(fds[s]));
 			}
 			/* Execute Command */
 			if(execvp(args[0], args) == -1){
