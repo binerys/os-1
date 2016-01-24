@@ -65,11 +65,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	switch(pid)
 	{
 		case 0: // CHILD PROCESS
-			/* Execute Command */
-			if(execvp(args[0], args) == -1){
-				fprintf(stderr, "ERROR: Unable to execute command \n");
-				return -1; 
-			}
 
 			// Set redirects for the child
 			dup2(new_input,0);
@@ -83,6 +78,12 @@ int command(int i, int o, int e, char* args[], int argsCount)
 				if (fds[i] != i || fds[i] != o || fds[i] != e)
 					close(get_fd(fds[i]));
 			}
+			/* Execute Command */
+			if(execvp(args[0], args) == -1){
+				fprintf(stderr, "ERROR: Unable to execute command \n");
+				return -1; 
+			}
+
 			break;
 
 		case -1: // ERROR
