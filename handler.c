@@ -94,9 +94,9 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		default: // PARENT
 			/* Wait for child */
 			add_proc(pid,args,argsCount);
-			close(new_output);
+			/*close(new_output);
 			close(new_input);
-			close(new_error);
+			close(new_error);*/
 			break;
 	}
 	return ret;
