@@ -39,4 +39,6 @@ void initialize(int argc, char** argv);
 	- frees all dynamically allocated arrays
  */
 void terminate();
+
+int max_exit(int parseExit);
 #endif

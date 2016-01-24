@@ -77,3 +77,19 @@ void terminate()
 	free(fds);
 }
 
+
+int max_exit(int parseExit)
+{
+	int max = parseExit;
+	int i;
+	if (procCount == 0)
+		return 0;
+	for(i = 0; i < procCount; i++)
+	{
+		if (proc[i].status > max)
+			max = proc[i].status;
+	}
+	return max;
+}
+
+

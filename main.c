@@ -21,5 +21,5 @@ int main(int argc, char** argv)
     terminate();
     
     free(argCopy);
-    return exit_status;    
+    return max_exit(exit_status);    
 }
