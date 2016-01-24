@@ -18,6 +18,8 @@ int proc_index = 0;
 int fdCount;
 int procCount;
 
+//jmp_buf context;
+
 void handle_fd(int fd)
 {
     fds[fd_index] = fd;
@@ -143,4 +145,10 @@ int create_pipe()
 	handle_fd(pfd[1]); // Write End
 	return 0;
 
+}
+
+void sig_handler(int signal, siginfo_t *a, void *b)
+{
+    printf("Handler accessed \n");
+    longjmp(context, -1);
 }

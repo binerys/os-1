@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <unistd.h>
+#include <setjmp.h>
 
 #include "parser.h"
 #include "openF.h"
@@ -24,6 +25,7 @@ int fileFlags[11];
     #define O_RSYNC O_SYNC
 #endif
 
+jmp_buf context;
  
 int parser(int argc, char** argv)
 {
@@ -325,7 +327,7 @@ int parser(int argc, char** argv)
                     printf("--ignore %s\n", optarg);
                 }
                 struct sigaction sig_struct;
-                sig_strcut.sa_sigaction = sig_handler;
+                sig_struct.sa_sigaction = sig_handler;
                 sig_struct.sa_handler = SIG_IGN;
                 sigemptyset(&sig_struct.sa_mask);
                 sig_struct.sa_flags = 0;
@@ -336,7 +338,7 @@ int parser(int argc, char** argv)
                     sigset_t ss;
                     sigemptyset(&ss);
                     sigaddset(&ss, SIGSEGV);
-                    sigprocmask(SIG_UNBLOCK, &ss, NULL)
+                    sigprocmask(SIG_UNBLOCK, &ss, NULL);
                     goto skip;
                 }
                 skip:
