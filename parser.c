@@ -328,7 +328,7 @@ int parser(int argc, char** argv)
                 }
                 struct sigaction sig_struct;
                 sig_struct.sa_sigaction = sig_handler;
-                sig_struct.sa_handler = SIG_IGN;
+                //sig_struct.sa_handler = SIG_IGN;
                 sigemptyset(&sig_struct.sa_mask);
                 sig_struct.sa_flags = 0;
                 //need to chekc if optarg exists first?
