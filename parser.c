@@ -320,16 +320,25 @@ int parser(int argc, char** argv)
                 
                 break;
             case 'q': /* IGNORE */
-                 if (verboseTrue == 1)
+                if (verboseTrue == 1)
                 {
                     printf("--ignore %s\n", optarg);
                 }
-                struct sigaction i;
-                i.sa_handler = SIG_IGN;
-                sigemptyset(&i.sa_mask);
-                i.sa_flags = 0;
+                struct sigaction sig_struct;
+                sig_strcut.sa_sigaction = sig_handler;
+                sig_struct.sa_handler = SIG_IGN;
+                sigemptyset(&sig_struct.sa_mask);
+                sig_struct.sa_flags = 0;
                 //need to chekc if optarg exists first?
-                sigaction (atoi(optarg), &i, NULL);
+                sigaction(atoi(optarg), &sig_struct, NULL);
+                if (setjmp(context))
+                {
+                    sigset_t ss;
+                    sigemptyset(&ss);
+                    sigaddset(&ss, SIGSEGV);
+                    sigprocmask(SIG_UNBLOCK, &ss, NULL)
+                    goto skip;
+                }
                 break;
             case 'u': /* DEFAULT */
                 if (verboseTrue == 1)
@@ -337,6 +346,7 @@ int parser(int argc, char** argv)
                     printf("--default %s\n", optarg);
                 }
                 struct sigaction d;
+                sig_struct.sa_sigaction = sig_handler;
                 d.sa_handler = SIG_DFL;
                 sigemptyset(&d.sa_mask);
                 d.sa_flags = 0;
