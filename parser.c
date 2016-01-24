@@ -301,6 +301,10 @@ int parser(int argc, char** argv)
                 break;
 
             case 'o': // PIPE
+                if (verboseTrue == 1)
+                {
+                    printf("--pipe \n");
+                }
                 if (create_pipe() == -1)
                     fprintf(stderr,"ERROR: Unable to create a pipe");
                 break;
