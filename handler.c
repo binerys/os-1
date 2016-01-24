@@ -141,5 +141,6 @@ int create_pipe()
 		return -1;
 	handle_fd(pfd[0]); // Read end
 	handle_fd(pfd[1]); // Write End
+	return 0;
 
 }
