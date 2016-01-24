@@ -149,6 +149,11 @@ int create_pipe()
 
 void sig_handler(int signal, siginfo_t *a, void *b)
 {
-    printf("Handler accessed \n");
     longjmp(context, -1);
+}
+
+void catch_handler(int signal, siginfo_t *a, void *b)
+{
+    fprintf(stderr, "%d caught\n", signal);
+    exit(signal);
 }

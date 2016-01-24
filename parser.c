@@ -319,7 +319,15 @@ int parser(int argc, char** argv)
                 int b = *a;
                 break;
             case 'g': /* CATCH */
-                
+                if (verboseTrue == 1)
+                {
+                    printf("--catch %s\n", optarg);
+                }
+                struct sigaction catch_struct;
+                catch_struct.sa_sigaction = catch_handler;
+                sigemptyset(&catch_struct.sa_mask);
+                catch_struct.sa_flags = 0;
+                sigaction(atoi(optarg), &catch_struct, NULL);
                 break;
             case 'q': /* IGNORE */
                 if (verboseTrue == 1)
@@ -328,7 +336,6 @@ int parser(int argc, char** argv)
                 }
                 struct sigaction sig_struct;
                 sig_struct.sa_sigaction = sig_handler;
-                //sig_struct.sa_handler = SIG_IGN;
                 sigemptyset(&sig_struct.sa_mask);
                 sig_struct.sa_flags = 0;
                 //need to chekc if optarg exists first?
@@ -348,13 +355,7 @@ int parser(int argc, char** argv)
                 {
                     printf("--default %s\n", optarg);
                 }
-                struct sigaction d;
-                sig_struct.sa_sigaction = sig_handler;
-                d.sa_handler = SIG_DFL;
-                sigemptyset(&d.sa_mask);
-                d.sa_flags = 0;
-                //need to chekc if optarg exists first?
-                sigaction (atoi(optarg), &d, NULL);
+                signal (atoi(optarg), SIG_DFL);
                 break;
             case 'h': /*PAUSE */
                 if (verboseTrue == 1)

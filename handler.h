@@ -9,6 +9,7 @@ void add_proc(pid_t pid, char** command, int commandCount);
 int p_wait();
 int create_pipe();
 void sig_handler();
+void catch_handler();
 
 extern jmp_buf context;
 
