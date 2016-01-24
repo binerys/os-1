@@ -76,7 +76,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 			for (s = 0; s < fdCount; s++)
 			{
 				if (s != i && s != o && s != e)
-					close(get_fd(fds[s]));
+					close(fds[s]);
 			}
 			/* Execute Command */
 			if(execvp(args[0], args) == -1){
@@ -106,7 +106,15 @@ int p_wait()
 {
 	int i;
 	int status;
-	for (i = 0; i <= proc_index; i++)
+
+	// Infinite waiting fix - Close all file descriptors
+	int s;
+	for (s = 0; s < fdCount; s++)
+	{
+		close(fds[s]);
+	}
+
+	for (i = 0; i < procCount; i++)
 	{
 		if(waitpid(proc[i].pid, &status, 0) == -1)
 			return -1;
@@ -114,6 +122,8 @@ int p_wait()
 			proc[i].status = WEXITSTATUS(status);
 
 		printf("%d", proc[i].status);
+
+		// Print out all of the command's args
 		int j;
 		for(j = 0; j < proc[i].cmdCount; j++)
 		{
