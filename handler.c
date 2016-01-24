@@ -75,7 +75,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 			int s;
 			for (s = 0; s < fdCount; s++)
 			{
-				if (fds[s] != i && fds[s] != o && fds[s] != e)
+				if (s != i && s != o && s != e)
 					close(get_fd(fds[s]));
 			}
 			/* Execute Command */
