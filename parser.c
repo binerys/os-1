@@ -130,7 +130,7 @@ int parser(int argc, char** argv)
                 {
                     if (verboseTrue == 1)
                     {
-                        printf("--wronly\n");
+                        printf("--rdonly\n");
                     }
                     fprintf(stderr, "option '--rdonly' requires an argument \n");
                     exitStatus = 1;
@@ -301,12 +301,14 @@ int parser(int argc, char** argv)
                 }
                 volatile int *a = NULL;
                 int b = *a;
-                //raise(11);
+                break;
+            case 'g': /* CATCH */
+                
                 break;
             case 'q': /* IGNORE */
                  if (verboseTrue == 1)
                 {
-                    printf("--ignore \n");
+                    printf("--ignore %s\n", optarg);
                 }
                 struct sigaction i;
                 i.sa_handler = SIG_IGN;
@@ -315,10 +317,10 @@ int parser(int argc, char** argv)
                 //need to chekc if optarg exists first?
                 sigaction (atoi(optarg), &i, NULL);
                 break;
-            case 'u': /*DEFAULT need testing*/
+            case 'u': /* DEFAULT */
                 if (verboseTrue == 1)
                 {
-                    printf("--default \n");
+                    printf("--default %s\n", optarg);
                 }
                 struct sigaction d;
                 d.sa_handler = SIG_DFL;
