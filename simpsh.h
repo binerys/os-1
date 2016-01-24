@@ -8,9 +8,11 @@
 // Counters
 extern int procCount;
 extern int fdCount;
+
 // Index variable
 extern int fd_index;
 extern int proc_index;
+extern int cmd_index;
 
 // Data Structures
 typedef struct process {
@@ -37,4 +39,6 @@ void initialize(int argc, char** argv);
 	- frees all dynamically allocated arrays
  */
 void terminate();
+
+int max_exit(int parseExit);
 #endif

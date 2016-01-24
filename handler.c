@@ -40,6 +40,20 @@ int get_fd(int index)
 	}
 }
 
+/* Retrieves process index in proc of given pid */
+int get_proc(pid_t pid)
+{
+	int i;
+	for(i = 0; i < procCount; i++)
+	{
+		if(proc[i].pid == pid)
+			return i;
+	}
+
+	// Unable to retrieve process index
+	return -1;
+}	
+
 void add_proc(pid_t pid, char** command, int commandCount)
 {
 	proc[proc_index].pid = pid;
@@ -108,6 +122,8 @@ int p_wait()
 {
 	int i;
 	int status;
+	int pid; 
+	int count = 0;
 
 	// Infinite waiting fix - Close all file descriptors
 	int s;
@@ -116,10 +132,17 @@ int p_wait()
 		close(fds[s]);
 	}
 
-	for (i = 0; i < procCount; i++)
+	while (count != cmd_index)
 	{
-		if(waitpid(proc[i].pid, &status, 0) == -1)
+		if ((pid = wait(&status)) == -1){
+			fprintf(stderr, "ERROR: Unable to wait.");
 			return -1;
+		}
+		if ( (i = get_proc(pid)) ==  -1) {
+			fprintf(stderr, "ERROR: Unable to retrieve process index of pid %d", pid);
+			break;
+		}
+		count++;
 		if (WIFEXITED(status))
 			proc[i].status = WEXITSTATUS(status);
 
@@ -132,7 +155,9 @@ int p_wait()
 			printf(" %s", proc[i].cmd[j]);
 		}
 		printf("\n");
+
 	}
+
 	return 0;
 }
 
