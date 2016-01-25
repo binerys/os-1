@@ -185,6 +185,30 @@ int parser(int argc, char** argv)
                 handle_fd(fd);
                 break;
             }
+            case 'd': /* READ AND WRITE */
+            {
+                if (optarg[0] == '-' && optarg[1] == '-')
+                {
+                    if (verboseTrue == 1)
+                    {
+                        printf("--rdwr\n");
+                    }
+                    fprintf(stderr, "option '--rdwr' requires an argument \n");
+                    exitStatus = 1;
+                    break;
+                }
+
+                if (verboseTrue == 1)
+                    printf("--rdwr %s\n", optarg);
+
+                if ((optind < argc && argv[optind][0] != '-'))
+                {
+                    exitStatus = 1;
+                }
+                fd = open_rdwr_f(optarg, fileFlags);
+                handle_fd(fd);
+                break;
+            }
             case 'c': /* COMMAND */
                 // Bring optind back one to read arguments 
                 optind--;

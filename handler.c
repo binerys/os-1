@@ -153,8 +153,9 @@ int p_wait()
 			break;
 		}
 		count++;
-		if (WIFEXITED(status))
+		if (WIFEXITED(status)){
 			proc[i].status = WEXITSTATUS(status);
+		}
 
 		printf("%d", proc[i].status);
 
