@@ -204,6 +204,7 @@ int parser(int argc, char** argv)
                 {
                     exitStatus = 1;
                 }
+
                 fd = open_rdwr_f(optarg, fileFlags);
                 handle_fd(fd);
                 break;
