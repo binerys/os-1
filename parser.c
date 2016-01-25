@@ -244,10 +244,7 @@ int parser(int argc, char** argv)
                     char* end;
                     if(i == 0 | i == 1 | i == 2)
                     {
-                        fdArgsLen = strlen(argv[optind]);
-                        if (fdArgsLen != 1) // Check that it is a single digit
-                            fprintf(stderr,"Error! Argument is not a single character! \n");
-
+                        // Convert argument into integer
                         temp = strtol(argv[optind], &end,0);
                         if(end == argv[optind]) // Not a digit
                             fprintf(stderr,"Error! Argument is not a digit! \n");
