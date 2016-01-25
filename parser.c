@@ -256,7 +256,6 @@ int parser(int argc, char** argv)
                 // Append null pointer to cmdArgs
                 commands[cmd_index][cmdArgsCount] = NULL;
 
-
                 if( verboseTrue == 1)
                 {
                     printf("--commmand");
@@ -267,7 +266,7 @@ int parser(int argc, char** argv)
                     }
                     printf("\n");
                 }
-                
+
                 cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
                 if (cmdStatus == -1)
                     exitStatus = 1;

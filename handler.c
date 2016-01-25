@@ -104,6 +104,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 				if (s != i && s != o && s != e)
 					close_fd(s);
 			}
+
 			/* Execute Command */
 			if(execvp(args[0], args) == -1){
 				fprintf(stderr, "ERROR: Unable to execute command \n");
