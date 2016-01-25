@@ -49,101 +49,62 @@ int parser(int argc, char** argv)
         
         switch(a)
         {
-            case 'p':
-                if (verboseTrue == 1)
-                {
-                    printf("--append\n");
-                }
+            case 'p': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);  
                 fileFlags[0] = O_APPEND;
-                break;
-            case 'x':
-                if (verboseTrue == 1)
-                {
-                    printf("--cloexec\n");
-                }
+                break; }
+            case 'x': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[1] = O_CLOEXEC;
-                break;
-            case 'e':
-                if (verboseTrue == 1)
-                {
-                    printf("--creat\n");
-                } 
+                break; }
+            case 'e': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[2] = O_CREAT;
-                break;
-            case 'i':
-                if (verboseTrue == 1)
-                {
-                    printf("--directory\n");
-                }
+                break; }
+            case 'i': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[3] = O_DIRECTORY;
-                break;
-            case 'n':
-                if (verboseTrue == 1)
-                {
-                    printf("--dsync\n");
-                }
+                break; }
+            case 'n': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[4] = O_DSYNC;
-                break;
-            case 'l':
-                if (verboseTrue == 1)
-                {
-                    printf("--excl\n");
-                }
+                break; }
+            case 'l': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[5] = O_EXCL;
-                break;
-            case 'f':
-                if (verboseTrue == 1)
-                {
-                    printf("--nofollow\n");
-                }
+                break; }
+            case 'f': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[6] = O_NOFOLLOW;
-                break;
-            case 'b':
-                if (verboseTrue == 1)
-                {
-                    printf("--nonblock\n");
-                }
+                break; }
+            case 'b': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);    
                 fileFlags[7] = O_NONBLOCK;
-                break;
-            case 'y':
-                if (verboseTrue == 1)
-                {
-                    printf("--rsync\n");
-                }
+                break; }
+            case 'y': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[8] = O_RSYNC;
-                break;
-            case 's':
-                if (verboseTrue == 1)
-                {
-                    printf("--sync\n");
-                }
+                break; }
+            case 's': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[9] = O_SYNC;
-                break;
-            case 't':
-                if (verboseTrue == 1)
-                {
-                    printf("--trunc\n");
-                }
+                break; }
+            case 't': {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[10] = O_TRUNC;
-                break;
+                break; }
             
             case 'r': /* READ ONLY */
             { 
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
-                    if (verboseTrue == 1)
-                    {
-                        printf("--rdonly\n");
-                    }
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--rdonly' requires an argument \n");
                     exitStatus = 1;
-                   // optind--;
                     break;
                 }
 
-                if (verboseTrue == 1)
-                    printf("--rdonly %s\n", optarg);
-                
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);                
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
                     exitStatus = 1;
@@ -154,26 +115,15 @@ int parser(int argc, char** argv)
             }
             case 'w': /* WRITE ONLY */
             {
-                
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
-                    if (verboseTrue == 1)
-                    {
-                        printf("--wronly\n");
-                    }
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--wronly' requires an argument \n");
                     exitStatus = 1;
-                   // optind--;
                     break;
                 }
                 
-
-                if (verboseTrue == 1)
-                {
-                    printf("--wronly %s \n", optarg);
-                }
-
-                
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
@@ -300,55 +250,48 @@ int parser(int argc, char** argv)
                     exitStatus = 1;
                 cmd_index++;
                 break;
-            case 'v': /* VERBOSE */
-                if (verboseTrue == 1)
-                {
-                    printf("--verbose \n");
-                }
+            case 'v': /* VERBOSE */ {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 verboseTrue = 1;
-                break;
-
-            case 'a': // WAIT
-                if (verboseTrue == 1)
-                {
-                    printf("--wait \n");
-                }
+                break; }
+            case 'a': /* WAIT */ {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 if( p_wait() == -1 )
                     fprintf(stderr, "ERROR: Unable to wait on a process");
-                break;
-
-            case 'o': // PIPE
-                if (verboseTrue == 1)
-                {
-                    printf("--pipe \n");
-                }
+                break; }
+            case 'o': /* PIPE */ {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 if (create_pipe() == -1)
                     fprintf(stderr,"ERROR: Unable to create a pipe");
-                break;
-            case 'z': /* ABORT */
-                if (verboseTrue == 1)
-                {
-                    printf("--abort \n");
-                }
+                break; }
+            case 'z': /* ABORT */ {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 volatile int *a = NULL;
                 int b = *a;
-                break;
-            case 'g': /* CATCH */
-                if (verboseTrue == 1)
+                break; }
+            case 'g': /* CATCH */ {
+                if (optarg[0] == '-' && optarg[1] == '-')
                 {
-                    printf("--catch %s\n", optarg);
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                    fprintf(stderr, "option '--catch' requires an argument \n");
+                    exitStatus = 1;
+                    break;
                 }
+
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
+                if ((optind < argc && argv[optind][0] != '-'))
+                {
+                    exitStatus = 1;
+                }
+
                 struct sigaction catch_struct;
                 catch_struct.sa_sigaction = catch_handler;
                 sigemptyset(&catch_struct.sa_mask);
                 catch_struct.sa_flags = 0;
                 sigaction(atoi(optarg), &catch_struct, NULL);
-                break;
-            case 'q': /* IGNORE */
-                if (verboseTrue == 1)
-                {
-                    printf("--ignore %s\n", optarg);
-                }
+                break; }
+            case 'q': /* IGNORE */ {
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 struct sigaction sig_struct;
                 sig_struct.sa_sigaction = sig_handler;
                 sigemptyset(&sig_struct.sa_mask);
@@ -364,19 +307,13 @@ int parser(int argc, char** argv)
                     goto skip;
                 }
                 skip:
-                break;
-            case 'u': /* DEFAULT */
-                if (verboseTrue == 1)
-                {
-                    printf("--default %s\n", optarg);
-                }
+                break; }
+            case 'u': /* DEFAULT */ {
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 signal (atoi(optarg), SIG_DFL);
-                break;
-            case 'h': /*PAUSE */
-                if (verboseTrue == 1)
-                {
-                    printf("--pause \n");
-                }
+                break; }
+            case 'h': /*PAUSE */ {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 pause();
                 break;
             case 'j': /*CLOSE*/ 

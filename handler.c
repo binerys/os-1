@@ -190,3 +190,19 @@ void catch_handler(int signal, siginfo_t *a, void *b)
     fprintf(stderr, "%d caught\n", signal);
     exit(signal);
 }
+
+void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag)
+{
+    if (verbose_flag != 1)
+    {
+        return;
+    }
+    else if (next_arg_flag != 1)
+    {
+        printf("%s \n", arg);
+    }
+    else
+    {
+        printf("%s %s \n", arg, next_arg);
+    }
+}
