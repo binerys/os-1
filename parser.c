@@ -48,11 +48,12 @@ int parser(int argc, char** argv)
         
         switch(a)
         {
-            case 'p':
-                if (verboseTrue == 1)
+            case 'p': ;
+                /*if (verboseTrue == 1)
                 {
                     printf("--append\n");
-                }
+                }*/
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);  
                 fileFlags[0] = O_APPEND;
                 break;
             case 'x':
@@ -140,9 +141,10 @@ int parser(int argc, char** argv)
                     break;
                 }
 
-                if (verboseTrue == 1)
-                    printf("--rdonly %s\n", optarg);
-                
+                //if (verboseTrue == 1)
+                  //  printf("--rdonly %s\n", optarg);
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);                
+
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
                     exitStatus = 1;

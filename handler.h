@@ -10,6 +10,7 @@ int p_wait();
 int create_pipe();
 void sig_handler();
 void catch_handler();
+void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag);
 
 extern jmp_buf context;
 
