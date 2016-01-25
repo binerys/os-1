@@ -201,9 +201,11 @@ void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag
     else if (next_arg_flag != 1)
     {
         printf("%s \n", arg);
+        fflush(stdout);
     }
     else
     {
         printf("%s %s \n", arg, next_arg);
+        fflush(stdout);
     }
 }

@@ -263,8 +263,10 @@ int parser(int argc, char** argv)
                     {
                         // printf(" %s",cmdArgs[j]);
                         printf(" %s", commands[cmd_index][j]);
+                        fflush(stdout);
                     }
                     printf("\n");
+                    fflush(stdout);
                 }
 
                 cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
