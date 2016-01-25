@@ -295,6 +295,8 @@ int parser(int argc, char** argv)
                 }
                 
                 cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
+                if (cmdStatus == -1)
+                    exitStatus = 1;
                 cmd_index++;
                 break;
             case 'v': /* VERBOSE */

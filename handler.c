@@ -18,8 +18,6 @@ int proc_index = 0;
 int fdCount;
 int procCount;
 
-//jmp_buf context;
-
 void handle_fd(int fd)
 {
     fds[fd_index] = fd;
@@ -88,7 +86,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	}
 
 	int status;
-	int ret = 0;
 	pid_t pid = fork();
 
 	switch(pid)
@@ -125,7 +122,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 			add_proc(pid,args,argsCount);
 			break;
 	}
-	return ret;
+	return 0;
 }
 
 int p_wait()
