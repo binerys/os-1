@@ -24,6 +24,7 @@ int fileFlags[11];
     #define O_RSYNC O_SYNC
 #endif
 
+
  
 int parser(int argc, char** argv)
 {
@@ -350,6 +351,19 @@ int parser(int argc, char** argv)
                 }
                 pause();
                 break;
+            case 'j': /*CLOSE*/ 
+            {
+                int tmp;
+                char* end2;
+                tmp = strtol(optarg, &end2,0);
+                if(end2 == optarg) // Not a digit
+                    fprintf(stderr,"ERROR: Argument is not a digit! \n");
+
+                if(close_fd(tmp) == -1)
+                    fprintf(stderr, "ERROR: File is already closed.");
+                
+                break;
+            }
             default:
                 abort();
             case '?':
