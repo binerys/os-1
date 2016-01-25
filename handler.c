@@ -40,6 +40,19 @@ int get_fd(int index)
 	}
 }
 
+int close_fd(int index)
+{
+	if ((index > fd_index) || (fds[index] == -1)){
+		return -1;
+	}
+	else{
+		close(fds[index]);
+		fds[index] = -1;
+		return 0;
+	}
+	
+}
+
 /* Retrieves process index in proc of given pid */
 int get_proc(pid_t pid)
 {
@@ -92,7 +105,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 			for (s = 0; s < fdCount; s++)
 			{
 				if (s != i && s != o && s != e)
-					close(fds[s]);
+					close_fd(s);
 			}
 			/* Execute Command */
 			if(execvp(args[0], args) == -1){
@@ -110,9 +123,6 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		default: // PARENT
 			/* Wait for child */
 			add_proc(pid,args,argsCount);
-			/*close(new_output);
-			close(new_input);
-			close(new_error);*/
 			break;
 	}
 	return ret;
@@ -129,7 +139,7 @@ int p_wait()
 	int s;
 	for (s = 0; s < fdCount; s++)
 	{
-		close(fds[s]);
+		close_fd(s);
 	}
 
 	while (count != cmd_index)
