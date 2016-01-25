@@ -49,50 +49,72 @@ int parser(int argc, char** argv)
         
         switch(a)
         {
-            case 'p': {
+            case 'p': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);  
                 fileFlags[0] = O_APPEND;
-                break; }
-            case 'x': {
+                break; 
+            }
+            case 'x': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[1] = O_CLOEXEC;
-                break; }
-            case 'e': {
+                break;
+            }
+            case 'e': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[2] = O_CREAT;
-                break; }
-            case 'i': {
+                break; 
+            }
+            case 'i': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[3] = O_DIRECTORY;
-                break; }
-            case 'n': {
+                break;
+            }
+            case 'n': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[4] = O_DSYNC;
-                break; }
-            case 'l': {
+                break; 
+            }
+            case 'l': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[5] = O_EXCL;
-                break; }
-            case 'f': {
+                break; 
+            }
+            case 'f': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[6] = O_NOFOLLOW;
-                break; }
-            case 'b': {
+                break; 
+            }
+            case 'b': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);    
                 fileFlags[7] = O_NONBLOCK;
-                break; }
-            case 'y': {
+                break;
+            }
+            case 'y': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[8] = O_RSYNC;
-                break; }
-            case 's': {
+                break; 
+            }
+            case 's': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[9] = O_SYNC;
-                break; }
-            case 't': {
+                break; 
+            }
+            case 't': 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[10] = O_TRUNC;
-                break; }
+                break; 
+            }
             
             case 'r': /* READ ONLY */
             { 
@@ -161,6 +183,7 @@ int parser(int argc, char** argv)
                 break;
             }
             case 'c': /* COMMAND */
+            {
                 
                 // Bring optind back one to read arguments 
                 optind--;
@@ -250,26 +273,36 @@ int parser(int argc, char** argv)
                     exitStatus = 1;
                 cmd_index++;
                 break;
-            case 'v': /* VERBOSE */ {
+            }
+            case 'v': /* VERBOSE */
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 verboseTrue = 1;
-                break; }
-            case 'a': /* WAIT */ {
+                break; 
+            }
+            case 'a': /* WAIT */ 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 if( p_wait() == -1 )
                     fprintf(stderr, "ERROR: Unable to wait on a process");
-                break; }
-            case 'o': /* PIPE */ {
+                break; 
+            }
+            case 'o': /* PIPE */ 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 if (create_pipe() == -1)
                     fprintf(stderr,"ERROR: Unable to create a pipe");
-                break; }
-            case 'z': /* ABORT */ {
+                break; 
+            }
+            case 'z': /* ABORT */
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 volatile int *a = NULL;
                 int b = *a;
-                break; }
-            case 'g': /* CATCH */ {
+                break; 
+            }
+            case 'g': /* CATCH */ 
+            {
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
@@ -289,8 +322,10 @@ int parser(int argc, char** argv)
                 sigemptyset(&catch_struct.sa_mask);
                 catch_struct.sa_flags = 0;
                 sigaction(atoi(optarg), &catch_struct, NULL);
-                break; }
-            case 'q': /* IGNORE */ {
+                break; 
+            }
+            case 'q': /* IGNORE */ 
+            {
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 struct sigaction sig_struct;
                 sig_struct.sa_sigaction = sig_handler;
@@ -307,15 +342,20 @@ int parser(int argc, char** argv)
                     goto skip;
                 }
                 skip:
-                break; }
-            case 'u': /* DEFAULT */ {
+                break; 
+            }
+            case 'u': /* DEFAULT */ 
+            {
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 signal (atoi(optarg), SIG_DFL);
-                break; }
-            case 'h': /*PAUSE */ {
+                break;
+            }
+            case 'h': /*PAUSE */ 
+            {
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 pause();
                 break;
+            }
             case 'j': /*CLOSE*/ 
             {
                 int tmp;
