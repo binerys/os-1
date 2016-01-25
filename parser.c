@@ -255,7 +255,20 @@ int parser(int argc, char** argv)
                 int b = *a;
                 break; }
             case 'g': /* CATCH */ {
+                if (optarg[0] == '-' && optarg[1] == '-')
+                {
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                    fprintf(stderr, "option '--catch' requires an argument \n");
+                    exitStatus = 1;
+                    break;
+                }
+
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
+                if ((optind < argc && argv[optind][0] != '-'))
+                {
+                    exitStatus = 1;
+                }
+
                 struct sigaction catch_struct;
                 catch_struct.sa_sigaction = catch_handler;
                 sigemptyset(&catch_struct.sa_mask);
