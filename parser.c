@@ -264,14 +264,6 @@ int parser(int argc, char** argv)
                     // Parse remaining cmd arguments
                     else 
                     {
-                        /*
-                        cmdArgsLen = strlen(argv[optind]);
-                        cmdArgs[cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
-                        strcpy(cmdArgs[cmdArgsIndex], argv[optind]);
-                        cmdArgs[cmdArgsIndex][cmdArgsLen+1] = '\n';
-                        cmdArgsIndex++;
-                        cmdArgsCount++;
-                        */
 
                         cmdArgsLen = strlen(argv[optind]);
                         commands[cmd_index][cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
