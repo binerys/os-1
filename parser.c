@@ -210,21 +210,21 @@ int parser(int argc, char** argv)
                 break;
             }
             case 'c': /* COMMAND */
+                
                 // Bring optind back one to read arguments 
                 optind--;
                
-                // File Descriptor args
-                int fdArgsLen = 0;
-                int fdArgsCount = 0;
+                /* File Descriptor args */
+                int fdArgsLen = 0; // The length of each argument
+                int fdArgsCount = 0;  // Number of arguments
                 int input = -1; 
                 int output = -1;
                 int error = -1; 
 
-                // Command Args
-                // char* cmdArgs[100];
-                int cmdArgsLen = 0;
-                int cmdArgsIndex = 0; // Incrementer for cmdArgs
-                int cmdArgsCount = 0;
+                /* Command args */
+                int cmdArgsLen = 0; // Length of current comand
+                int cmdArgsIndex = 0; // Tracks current commands argument index
+                int cmdArgsCount = 0; // Number of arguments for command
                 int cmdStatus;
 
                 commands[cmd_index] = malloc(MAX_ARGS*sizeof(char*));
@@ -264,7 +264,6 @@ int parser(int argc, char** argv)
                     // Parse remaining cmd arguments
                     else 
                     {
-
                         cmdArgsLen = strlen(argv[optind]);
                         commands[cmd_index][cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
                         strcpy(commands[cmd_index][cmdArgsIndex], argv[optind]);
@@ -284,7 +283,6 @@ int parser(int argc, char** argv)
                 }
 
                 // Append null pointer to cmdArgs
-                //cmdArgs[cmdArgsCount] = NULL;
                 commands[cmd_index][cmdArgsCount] = NULL;
 
 
@@ -298,7 +296,7 @@ int parser(int argc, char** argv)
                     }
                     printf("\n");
                 }
-                // cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
+                
                 cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
                 cmd_index++;
                 break;
