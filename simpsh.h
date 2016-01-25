@@ -5,11 +5,15 @@
 /* GLOBALS */
 /////////////////////////////////
 
+// Status
+extern int verboseTrue;
+extern int exitStatus;
+
 // Counters
 extern int procCount;
 extern int fdCount;
 
-// Index variable
+// Index variables
 extern int fd_index;
 extern int proc_index;
 extern int cmd_index;
