@@ -10,7 +10,8 @@ int p_wait();
 int create_pipe();
 void sig_handler();
 void catch_handler();
-
 extern jmp_buf context;
+int close_fd(int index);
+
 
 #endif

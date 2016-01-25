@@ -30,7 +30,7 @@ static struct option long_options[] =
     {"wait",        no_argument,       0, 'a'}, 
    
     // MISC:
-    {"close",       required_argument, 0, 'p'},
+    {"close",       required_argument, 0, 'j'},
     {"verbose",     no_argument,       0, 'v'},
     {"profile",     no_argument,       0, 'm'},
     {"abort",       no_argument,       0, 'z'},

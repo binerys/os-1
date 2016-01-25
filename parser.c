@@ -26,6 +26,7 @@ int fileFlags[11];
 #endif
 
 jmp_buf context;
+
  
 int parser(int argc, char** argv)
 {
@@ -210,21 +211,21 @@ int parser(int argc, char** argv)
                 break;
             }
             case 'c': /* COMMAND */
+                
                 // Bring optind back one to read arguments 
                 optind--;
                
-                // File Descriptor args
-                int fdArgsLen = 0;
-                int fdArgsCount = 0;
+                /* File Descriptor args */
+                int fdArgsLen = 0; // The length of each argument
+                int fdArgsCount = 0;  // Number of arguments
                 int input = -1; 
                 int output = -1;
                 int error = -1; 
 
-                // Command Args
-                // char* cmdArgs[100];
-                int cmdArgsLen = 0;
-                int cmdArgsIndex = 0; // Incrementer for cmdArgs
-                int cmdArgsCount = 0;
+                /* Command args */
+                int cmdArgsLen = 0; // Length of current comand
+                int cmdArgsIndex = 0; // Tracks current commands argument index
+                int cmdArgsCount = 0; // Number of arguments for command
                 int cmdStatus;
 
                 commands[cmd_index] = malloc(MAX_ARGS*sizeof(char*));
@@ -244,10 +245,7 @@ int parser(int argc, char** argv)
                     char* end;
                     if(i == 0 | i == 1 | i == 2)
                     {
-                        fdArgsLen = strlen(argv[optind]);
-                        if (fdArgsLen != 1) // Check that it is a single digit
-                            fprintf(stderr,"Error! Argument is not a single character! \n");
-
+                        // Convert argument into integer
                         temp = strtol(argv[optind], &end,0);
                         if(end == argv[optind]) // Not a digit
                             fprintf(stderr,"Error! Argument is not a digit! \n");
@@ -264,15 +262,6 @@ int parser(int argc, char** argv)
                     // Parse remaining cmd arguments
                     else 
                     {
-                        /*
-                        cmdArgsLen = strlen(argv[optind]);
-                        cmdArgs[cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
-                        strcpy(cmdArgs[cmdArgsIndex], argv[optind]);
-                        cmdArgs[cmdArgsIndex][cmdArgsLen+1] = '\n';
-                        cmdArgsIndex++;
-                        cmdArgsCount++;
-                        */
-
                         cmdArgsLen = strlen(argv[optind]);
                         commands[cmd_index][cmdArgsIndex] = malloc((cmdArgsLen+1)*sizeof(char));
                         strcpy(commands[cmd_index][cmdArgsIndex], argv[optind]);
@@ -292,7 +281,6 @@ int parser(int argc, char** argv)
                 }
 
                 // Append null pointer to cmdArgs
-                //cmdArgs[cmdArgsCount] = NULL;
                 commands[cmd_index][cmdArgsCount] = NULL;
 
 
@@ -306,8 +294,10 @@ int parser(int argc, char** argv)
                     }
                     printf("\n");
                 }
-                // cmdStatus = command(input,output,error,cmdArgs,cmdArgsCount);
+                
                 cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
+                if (cmdStatus == -1)
+                    exitStatus = 1;
                 cmd_index++;
                 break;
             case 'v': /* VERBOSE */
@@ -389,6 +379,19 @@ int parser(int argc, char** argv)
                 }
                 pause();
                 break;
+            case 'j': /*CLOSE*/ 
+            {
+                int tmp;
+                char* end2;
+                tmp = strtol(optarg, &end2,0);
+                if(end2 == optarg) // Not a digit
+                    fprintf(stderr,"ERROR: Argument is not a digit! \n");
+
+                if(close_fd(tmp) == -1)
+                    fprintf(stderr, "ERROR: File is already closed.");
+                
+                break;
+            }
             default:
                 abort();
             case '?':
