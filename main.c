@@ -18,9 +18,10 @@ int main(int argc, char** argv)
 	
 	initialize(argc, argCopy);
     exit_status = parser(argc, argv);
-    terminate();
     
+    int maxExit = max_exit(exit_status);
+
+    terminate();
     free(argCopy);
-    int exit = max_exit(exit_status);
-    return exit;    
+    exit(maxExit);
 }
