@@ -3,6 +3,11 @@
 
 #include <setjmp.h>
 
+int setFlags (int flags[]);
+int open_rdonly_f(char* file, int flags[]);
+int open_wronly_f(char* file, int flags[]);
+int open_rdwr_f(char* file, int flags[]);
+
 void handle_fd(int fd);
 int command(int i, int o, int e, char* args[], int argsCount);
 void add_proc(pid_t pid, char** command, int commandCount);

@@ -8,7 +8,6 @@
 #include <setjmp.h>
 
 #include "parser.h"
-#include "openF.h"
 #include "handler.h"
 #include "simpsh.h"
 
