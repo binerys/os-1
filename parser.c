@@ -162,17 +162,13 @@ int parser(int argc, char** argv)
             {
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
-                    if (verboseTrue == 1)
-                    {
-                        printf("--rdwr\n");
-                    }
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--rdwr' requires an argument \n");
                     exitStatus = 1;
                     break;
                 }
 
-                if (verboseTrue == 1)
-                    printf("--rdwr %s\n", optarg);
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);                
 
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
@@ -328,7 +324,21 @@ int parser(int argc, char** argv)
             }
             case 'q': /* IGNORE */ 
             {
+                if (optarg[0] == '-' && optarg[1] == '-')
+                {
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                    fprintf(stderr, "option '--ignore' requires an argument \n");
+                    exitStatus = 1;
+                    break;
+                }
+
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
+
+                if ((optind < argc && argv[optind][0] != '-'))
+                {
+                    exitStatus = 1;
+                }
+
                 struct sigaction sig_struct;
                 sig_struct.sa_sigaction = sig_handler;
                 sigemptyset(&sig_struct.sa_mask);
@@ -349,7 +359,21 @@ int parser(int argc, char** argv)
             }
             case 'u': /* DEFAULT */ 
             {
+                if (optarg[0] == '-' && optarg[1] == '-')
+                {
+                    verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                    fprintf(stderr, "option '--default' requires an argument \n");
+                    exitStatus = 1;
+                    break;
+                }
+
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
+
+                if ((optind < argc && argv[optind][0] != '-'))
+                {
+                    exitStatus = 1;
+                }
+
                 char* defEnd;
                 signal (strtol(optarg, &defEnd, 0), SIG_DFL);
                 break;
