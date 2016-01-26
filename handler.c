@@ -147,6 +147,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 		fprintf(stderr, "ERROR: File descriptors do not exist \n");
 	}
 
+
 	int status;
 	pid_t pid = fork();
 
@@ -157,7 +158,9 @@ int command(int i, int o, int e, char* args[], int argsCount)
 			// Set redirects for the child
 			dup2(new_input,0);
 			dup2(new_output,1);
-			dup2(new_error,2);
+			
+			if (new_error != -1)
+				dup2(new_error,2);
 
 			// Close remaining file descriptors
 			int s;
