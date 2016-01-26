@@ -3,22 +3,70 @@
 
 #include <setjmp.h>
 
+/////////////////////////////////
+/* FUNCTIONS */
+/////////////////////////////////
+
+/* File Opening Functions */
 int setFlags (int flags[]);
 int open_rdonly_f(char* file, int flags[]);
 int open_wronly_f(char* file, int flags[]);
 int open_rdwr_f(char* file, int flags[]);
 
+/* File Descriptor Functions */
+
+/** 
+*	handle_fd: Stores new file descriptor into fds array
+*	- fd: file descriptor
+**/
 void handle_fd(int fd);
-int command(int i, int o, int e, char* args[], int argsCount);
+
+/** 
+*	get_fd: Retrieves file descriptor at specified index
+**/
+int get_fd(int index);
+
+/** 
+*	close_fd: Closes file descriptor at specified index
+**/
+int close_fd(int index);
+
+/* Process Functions */
+
+/** 
+*	add_proc: Adds new process to process array
+*	- pid: process id
+* 	- command: Pointer to command and arguments in commands array
+*	- commandCount: Number of arguments for command
+**/
 void add_proc(pid_t pid, char** command, int commandCount);
-int p_wait();
+
+/** 
+*	get_proc: Retrieves index of process with specified pid
+**/
+int get_proc(pid_t pid);
+
+
+/* Execution Functions */
+
+/** 
+*	command: Executes command
+*	- i, o, e: input, output, and error file descriptor
+* 	- args: Pointer to command and arguments in commands array
+*	- argsCount: Number of arguments for command
+**/
+int command(int i, int o, int e, char* args[], int argsCount);
 int create_pipe();
+
+/* Signal Handling Functions */
 void sig_handler();
 void catch_handler();
+
+/* Misc */
 void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag);
+int p_wait();
 
 extern jmp_buf context;
-int close_fd(int index);
 
 
 #endif

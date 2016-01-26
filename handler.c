@@ -10,6 +10,7 @@
 #include "parser.h"
 #include "simpsh.h"
 
+/* GLOBALS */
 process	*proc;
 int *fds;
 
@@ -19,6 +20,7 @@ int proc_index = 0;
 
 int fdCount;
 int procCount;
+/*************/
 
 int flagsNum;
 
@@ -88,11 +90,7 @@ void handle_fd(int fd)
     fd_index++;
 }
 
-/**
- * Retrieves actual fd from fileDescriptors
- * @param  index Simpsh FD
- * @return       Actual file descriptor or -1 if does not exist 
- */
+
 int get_fd(int index)
 {
 	if (index > fd_index)
@@ -115,7 +113,7 @@ int close_fd(int index)
 	
 }
 
-/* Retrieves process index in proc of given pid */
+
 int get_proc(pid_t pid)
 {
 	int i;

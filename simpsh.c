@@ -56,6 +56,7 @@ void initialize(int argc, char** argv)
 	proc = malloc(procCount*sizeof(process));
 	commands = malloc(procCount*sizeof(char**));
 	fds = malloc(fdCount*sizeof(int));
+	max_args = argc;
 	optind = 1;
 
 	return;

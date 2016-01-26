@@ -12,6 +12,7 @@ extern int exitStatus;
 // Counters
 extern int procCount;
 extern int fdCount;
+extern int max_args;
 
 // Index variables
 extern int fd_index;
