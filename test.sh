@@ -12,7 +12,7 @@ if [ $? -eq 0 ]
 		exit 1
 fi
 
-
+echo "Running Test 2"
 # TEST 2
 ./simpsh --verbose --ignore 11 --rdwr a --append --rdwr b --append --wronly c --abort --pipe --pipe --command 1 4 2 tr A-Z a-z --command 5 0 2 cat - --command 3 6 2 sed '1d' --wait
 if [ $? -eq 0 ] 
@@ -24,13 +24,15 @@ if [ $? -eq 0 ]
 		exit 1
 fi
 
+echo "Running Test 3"
 # TEST 3
 ./simpsh --rdonly a --wronly b --wronly c --command 1 0 2 echo a --wait
 if [ $? -eq 1 ] 
 	then
-		exit 0
+		echo "Test 3 success!"
 	else
-		echo "make check did not catch error"
+		echo "Make check did not catch error"
+		echo "Test: ./simpsh --rdonly a --wronly b --wronly c --command 1 0 2 echo a --wait"
 		exit 1
 fi
 

@@ -18,10 +18,10 @@ int main(int argc, char** argv)
 	
 	initialize(argc, argCopy);
     exit_status = parser(argc, argv);
-    terminate();
     
-    free(argCopy);
     int maxExit = max_exit(exit_status);
-    printf("exit: %d", maxExit);
+
+    terminate();
+    free(argCopy);
     exit(maxExit);
 }

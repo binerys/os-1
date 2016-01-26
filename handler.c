@@ -216,7 +216,8 @@ int p_wait()
 		}
 		count++;
 		
-		proc[i].status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			proc[i].status = WEXITSTATUS(status);
 		
 
 		printf("%d", proc[i].status);
