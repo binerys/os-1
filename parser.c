@@ -11,12 +11,14 @@
 #include "handler.h"
 #include "simpsh.h"
 
+/* GLOBALS */
 int verboseTrue = 0; 
 int exitStatus = 0;
 
 char*** commands;
 int cmd_index = 0;
-#define MAX_ARGS 100
+int max_args;
+/*******************/
 
 int fileFlags[11];
 
@@ -200,14 +202,13 @@ int parser(int argc, char** argv)
                 int cmdArgsCount = 0; // Number of arguments for command
                 int cmdStatus;
 
-                commands[cmd_index] = malloc(MAX_ARGS*sizeof(char*));
+                commands[cmd_index] = malloc(max_args*sizeof(char*));
 
                 for (int i= 0; optind < argc; optind++)
                 {
                     // Go through command args until we reach a new option
                     if(argv[optind][0] == '-' && argv[optind][1] == '-')
                     {
-                        //printf("Discovered new option: %s \n",argv[optind]);
                         break;
                     }
 

@@ -27,7 +27,7 @@ fi
 echo "Running Test 3"
 # TEST 3
 ./simpsh --rdonly a --wronly b --wronly c --command 1 0 2 echo a --wait
-if [ $? -eq 1 ] 
+if [ $? -ne 0 ] 
 	then
 		echo "Test 3 success!"
 	else

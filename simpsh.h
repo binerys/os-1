@@ -12,6 +12,7 @@ extern int exitStatus;
 // Counters
 extern int procCount;
 extern int fdCount;
+extern int max_args;
 
 // Index variables
 extern int fd_index;
@@ -44,5 +45,8 @@ void initialize(int argc, char** argv);
  */
 void terminate();
 
+/* 
+	max_exit: returns the maximum exit status of all processes
+*/
 int max_exit(int parseExit);
 #endif
