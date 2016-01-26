@@ -20,11 +20,13 @@ void initialize(int argc, char** argv)
 			loop = 0;
 		switch(ret)
 		{
+			
 			case 'c': // COMMAND
 			{
 				procCount++;
 				break;
 			}
+
 			case 'r': // READ-ONLY
 			{
 				fdCount++;
