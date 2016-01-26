@@ -22,6 +22,6 @@ int main(int argc, char** argv)
     
     free(argCopy);
     int maxExit = max_exit(exit_status);
-    printf("exit: %d", exit_status);
+    printf("exit: %d", maxExit);
     exit(maxExit);
 }
