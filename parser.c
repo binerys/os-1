@@ -321,7 +321,8 @@ int parser(int argc, char** argv)
                 catch_struct.sa_sigaction = catch_handler;
                 sigemptyset(&catch_struct.sa_mask);
                 catch_struct.sa_flags = 0;
-                sigaction(atoi(optarg), &catch_struct, NULL);
+                char* catchEnd;
+                sigaction(strtol(optarg, &catchEnd, 0), &catch_struct, NULL);
                 break; 
             }
             case 'q': /* IGNORE */ 
@@ -331,8 +332,9 @@ int parser(int argc, char** argv)
                 sig_struct.sa_sigaction = sig_handler;
                 sigemptyset(&sig_struct.sa_mask);
                 sig_struct.sa_flags = 0;
+                char* ignoreEnd;
                 //need to chekc if optarg exists first?
-                sigaction(atoi(optarg), &sig_struct, NULL);
+                sigaction(strtol(optarg, &ignoreEnd, 0), &sig_struct, NULL);
                 if (setjmp(context))
                 {
                     sigset_t ss;
@@ -347,7 +349,8 @@ int parser(int argc, char** argv)
             case 'u': /* DEFAULT */ 
             {
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
-                signal (atoi(optarg), SIG_DFL);
+                char* defEnd;
+                signal (strtol(optarg, &defEnd, 0), SIG_DFL);
                 break;
             }
             case 'h': /*PAUSE */ 
