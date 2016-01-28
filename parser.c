@@ -399,6 +399,11 @@ int parser(int argc, char** argv)
                 
                 break;
             }
+            case 'm': /* PROFILE */
+            {
+                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                break;
+            }
             default:
                 abort();
             case '?':
