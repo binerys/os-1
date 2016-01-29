@@ -133,7 +133,7 @@ int parser(int argc, char** argv)
                     exitStatus = 1;
                 }  
                 fd = open_rdonly_f(optarg, fileFlags);
-                handle_fd(fd); 
+                handle_fd(fd,FD); 
                 break;
             }
             case 'w': /* WRITE ONLY */
@@ -155,7 +155,7 @@ int parser(int argc, char** argv)
                 
                 
                 fd = open_wronly_f(optarg, fileFlags);
-                handle_fd(fd);
+                handle_fd(fd,FD);
                 break;
             }
             case 'd': /* READ AND WRITE */
@@ -176,7 +176,7 @@ int parser(int argc, char** argv)
                 }
 
                 fd = open_rdwr_f(optarg, fileFlags);
-                handle_fd(fd);
+                handle_fd(fd,FD);
                 break;
             }
             case 'c': /* COMMAND */

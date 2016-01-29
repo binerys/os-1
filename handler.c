@@ -12,7 +12,7 @@
 
 /* GLOBALS */
 process	*proc;
-int *fds;
+fileDescriptor *fds;
 
 
 int fd_index = 0;
@@ -84,9 +84,9 @@ int open_rdwr_f (char* file, int flags[])
 
 }
 
-void handle_fd(int fd)
+void handle_fd(int fd, fdtype type)
 {
-    fds[fd_index] = fd;
+    fds[fd_index].fd = fd;
     fd_index++;
 }
 
@@ -96,18 +96,18 @@ int get_fd(int index)
 	if (index > fd_index)
 		return -1;
 	else{
-		return fds[index];
+		return fds[index].fd;
 	}
 }
 
 int close_fd(int index)
 {
-	if ((index > fd_index) || (fds[index] == -1)){
+	if ((index > fd_index) || (fds[index].fd == -1)){
 		return -1;
 	}
 	else{
-		close(fds[index]);
-		fds[index] = -1;
+		close(fds[index].fd);
+		fds[index].fd = -1;
 		return 0;
 	}
 	
@@ -185,8 +185,15 @@ int command(int i, int o, int e, char* args[], int argsCount, int argsIndex)
 			break;
 
 		default: // PARENT
-			/* Wait for child */
 			add_proc(pid,args,argsCount,argsIndex);
+			if(fds[o].f_type == P_WRITE)
+			{
+				close_fd(o);
+			}
+			if(fds[i].f_type == P_READ)
+			{
+				close_fd(i);
+			}
 			break;
 	}
 	return 0;
@@ -200,11 +207,13 @@ int p_wait()
 	int count = 0;
 
 	// Infinite waiting fix - Close all file descriptors
+	/*
 	int s;
 	for (s = 0; s < fdCount; s++)
 	{
 		close_fd(s);
 	}
+	*/
 
 	while (count != cmd_index)
 	{
@@ -242,8 +251,8 @@ int create_pipe()
 	int pfd[2];
 	if( pipe(pfd) == -1)
 		return -1;
-	handle_fd(pfd[0]); // Read end
-	handle_fd(pfd[1]); // Write End
+	handle_fd(pfd[0], P_READ); // Read end
+	handle_fd(pfd[1], P_WRITE); // Write End
 	return 0;
 
 }

@@ -2,6 +2,7 @@
 #define HANDLER_H
 
 #include <setjmp.h>
+#include "simpsh.h"
 
 
 /////////////////////////////////
@@ -25,10 +26,11 @@ int open_rdwr_f(char* file, int flags[]);
 *	handle_fd: Stores new file descriptor into fds array
 *	- fd: file descriptor
 **/
-void handle_fd(int fd);
+void handle_fd(int fd, fdtype type);
 
 /** 
 *	get_fd: Retrieves file descriptor at specified index
+*	pipe == 1 - fd is for a pipe
 **/
 int get_fd(int index);
 

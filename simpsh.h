@@ -28,8 +28,21 @@ typedef struct process {
 	int cmdIndex;
 } process;
 
+typedef enum fdtype {
+	FD,
+	P_WRITE,
+	P_READ
+} fdtype;
+
+typedef struct fileDescriptor
+{
+	int fd;
+	fdtype f_type;
+} fileDescriptor;
+
 extern process	*proc; // Process Array
-extern int *fds; // File Descriptor Array
+//extern int *fds; // File Descriptor Array
+extern fileDescriptor *fds;
 extern char*** commands; // Array of all commandså
 
 /////////////////////////////////
