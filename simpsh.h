@@ -25,6 +25,7 @@ typedef struct process {
 	int status;
 	char** cmd; // Points to process's command in commads array
 	int cmdCount;  
+	int cmdIndex;
 } process;
 
 extern process	*proc; // Process Array

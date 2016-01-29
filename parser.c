@@ -265,7 +265,7 @@ int parser(int argc, char** argv)
                     fflush(stdout);
                 }
 
-                cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount);
+                cmdStatus = command(input,output,error,commands[cmd_index],cmdArgsCount,cmd_index);
                 if (cmdStatus == -1)
                     exitStatus = 1;
                 cmd_index++;

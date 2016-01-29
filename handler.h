@@ -45,7 +45,7 @@ int close_fd(int index);
 * 	- command: Pointer to command and arguments in commands array
 *	- commandCount: Number of arguments for command
 **/
-void add_proc(pid_t pid, char** command, int commandCount);
+void add_proc(pid_t pid, char** command, int commandCount, int commandIndex);
 
 /** 
 *	get_proc: Retrieves index of process with specified pid
@@ -61,7 +61,7 @@ int get_proc(pid_t pid);
 * 	- args: Pointer to command and arguments in commands array
 *	- argsCount: Number of arguments for command
 **/
-int command(int i, int o, int e, char* args[], int argsCount);
+int command(int i, int o, int e, char* args[], int argsCount, int argsIndex);
 int create_pipe();
 
 

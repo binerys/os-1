@@ -127,15 +127,16 @@ int get_proc(pid_t pid)
 	return -1;
 }	
 
-void add_proc(pid_t pid, char** command, int commandCount)
+void add_proc(pid_t pid, char** command, int commandCount, int commandIndex)
 {
 	proc[proc_index].pid = pid;
 	proc[proc_index].cmd = command;
 	proc[proc_index].cmdCount = commandCount;
+	proc[proc_index].cmdIndex = commandIndex;
 	proc_index++;
 }
 
-int command(int i, int o, int e, char* args[], int argsCount)
+int command(int i, int o, int e, char* args[], int argsCount, int argsIndex)
 {
 
 	// REDIRECTION: 
@@ -185,7 +186,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 
 		default: // PARENT
 			/* Wait for child */
-			add_proc(pid,args,argsCount);
+			add_proc(pid,args,argsCount,argsIndex);
 			break;
 	}
 	return 0;
