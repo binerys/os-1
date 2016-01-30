@@ -392,7 +392,7 @@ int parser(int argc, char** argv)
                 if(end2 == optarg) // Not a digit
                     fprintf(stderr,"ERROR: Argument is not a digit! \n");
 
-                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
 
                 if(close_fd(tmp) == -1)
                     fprintf(stderr, "ERROR: File is already closed.");
