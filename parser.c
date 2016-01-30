@@ -279,10 +279,62 @@ int parser(int argc, char** argv)
             }
             case 'a': /* WAIT */ 
             {
-                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
-                if( p_wait() == -1 )
-                    fprintf(stderr, "ERROR: Unable to wait on a process");
-                break; 
+                
+
+                char arg[1];
+                int argSize = 0;
+
+                for (int i= 0; optind < argc; optind++)
+                {
+                    // Go through command args until we reach a new option
+                    if(argv[optind][0] == '-' && argv[optind][1] == '-')
+                    {
+                        break;
+                    }
+                    if(argSize == 1)
+                    {
+                        fprintf(stderr,"ERROR: Wait requires a single argument.");
+                        exitStatus = 1;
+                        break;
+                    }
+                    strcpy(arg,argv[optind]);
+                    argSize++;
+                }
+
+                if(argSize == 0)
+                {
+                    if(verboseTrue == 1)
+                    {
+                        printf("--wait \n");
+                        fflush(stdout);
+                    }
+                   /* if( p_wait(-1) == -1 )
+                        fprintf(stderr, "ERROR: Unable to wait on a process");*/
+                }
+                else
+                {
+                    int subcmd_index;
+                    char* end_check;
+                    subcmd_index = strtol(arg, &end_check,0);
+                    if(end_check == arg) // Not a digit
+                    {
+                        fprintf(stderr,"ERROR: Argument is not a digit! \n");
+                        exitStatus = 1;
+                    }
+
+                    if(verboseTrue == 1)
+                    {
+                        printf("--wait %d \n", subcmd_index);
+                        fflush(stdout);
+                    }
+                
+                   /* if(p_wait(subcmd_index) == -1){
+                        fprintf(stderr, "ERROR: Unable to wait on a process");
+                        exitStatus = 1;
+                    } */
+                }
+
+ 
             }
             case 'o': /* PIPE */ 
             {
@@ -391,10 +443,16 @@ int parser(int argc, char** argv)
                 char* end2;
                 tmp = strtol(optarg, &end2,0);
                 if(end2 == optarg) // Not a digit
+                {
                     fprintf(stderr,"ERROR: Argument is not a digit! \n");
+                    exitStatus = 1;
+                }
 
                 if(close_fd(tmp) == -1)
+                {
                     fprintf(stderr, "ERROR: File is already closed.");
+                }
+
                 
                 break;
             }

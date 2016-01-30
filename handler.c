@@ -201,7 +201,7 @@ int command(int i, int o, int e, char* args[], int argsCount, int argsIndex)
 	return 0;
 }
 
-int p_wait()
+int p_wait(int wait_command)
 {
 	int i;
 	int status;
@@ -217,32 +217,35 @@ int p_wait()
 	}
 	*/
 
-	while (count != cmd_index)
+	if (wait_command == -1)
 	{
-		if ((pid = wait(&status)) == -1){
-			fprintf(stderr, "ERROR: Unable to wait.");
-			return -1;
-		}
-		if ( (i = get_proc(pid)) ==  -1) {
-			fprintf(stderr, "ERROR: Unable to retrieve process index of pid %d", pid);
-			break;
-		}
-		count++;
-		
-		if (WIFEXITED(status))
-			proc[i].status = WEXITSTATUS(status);
-		
-
-		printf("%d", proc[i].status);
-
-		// Print out all of the command's args
-		int j;
-		for(j = 0; j < proc[i].cmdCount; j++)
+		while (count != cmd_index)
 		{
-			printf(" %s", proc[i].cmd[j]);
-		}
-		printf("\n");
+			if ((pid = wait(&status)) == -1){
+				fprintf(stderr, "ERROR: Unable to wait.");
+				return -1;
+			}
+			if ( (i = get_proc(pid)) ==  -1) {
+				fprintf(stderr, "ERROR: Unable to retrieve process index of pid %d", pid);
+				break;
+			}
+			count++;
+			
+			if (WIFEXITED(status))
+				proc[i].status = WEXITSTATUS(status);
+			
 
+			printf("%d", proc[i].status);
+
+			// Print out all of the command's args
+			int j;
+			for(j = 0; j < proc[i].cmdCount; j++)
+			{
+				printf(" %s", proc[i].cmd[j]);
+			}
+			printf("\n");
+
+		}
 	}
 
 	return 0;
