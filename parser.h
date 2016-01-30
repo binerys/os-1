@@ -27,7 +27,7 @@ static struct option long_options[] =
 
     // SUBCOMMANDS
     {"command",     required_argument, 0, 'c'},
-    {"wait",        required_argument, 0, 'a'}, 
+    {"wait",        optional_argument, 0, 'a'}, 
    
     // MISC:
     {"close",       required_argument, 0, 'j'},

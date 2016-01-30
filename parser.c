@@ -279,9 +279,6 @@ int parser(int argc, char** argv)
             }
             case 'a': /* WAIT */ 
             {
-                
-
-                char arg[1];
                 int argSize = 0;
 
                 for (int i= 0; optind < argc; optind++)
@@ -297,7 +294,6 @@ int parser(int argc, char** argv)
                         exitStatus = 1;
                         break;
                     }
-                    strcpy(arg,argv[optind]);
                     argSize++;
                 }
 
@@ -315,8 +311,8 @@ int parser(int argc, char** argv)
                 {
                     int subcmd_index;
                     char* end_check;
-                    subcmd_index = strtol(arg, &end_check,0);
-                    if(end_check == arg) // Not a digit
+                    subcmd_index = strtol(argv[optind], &end_check,0);
+                    if(end_check == argv[optind]) // Not a digit
                     {
                         fprintf(stderr,"ERROR: Argument is not a digit! \n");
                         exitStatus = 1;
@@ -324,7 +320,7 @@ int parser(int argc, char** argv)
 
                     if(verboseTrue == 1)
                     {
-                        printf("--wait %d \n", subcmd_index);
+                        printf("--wait %d", subcmd_index);
                         fflush(stdout);
                     }
                 
