@@ -13,8 +13,8 @@ if [ $? -eq 0 ]
 fi
 
 echo "Running Test 2"
-# TEST 2
-./simpsh --verbose --ignore 11 --rdwr a --append --rdwr b --append --wronly c --abort --pipe --pipe --command 1 4 2 tr A-Z a-z --command 5 0 2 cat - --command 3 6 2 sed '1d' --wait
+# TEST 2 a 0 b 1 c 2 p1r 3 p1w 4 p2r 5 p2w 6: tr | sed | cat
+./simpsh --verbose --ignore 11 --rdwr a --append --rdwr b --append --wronly c --abort --pipe --pipe --command 1 4 2 tr A-Z a-z  --command 5 0 2 cat -  --command 3 6 2 sed '1d' --close 4 --close 5 --close 3 --close 6 --wait
 if [ $? -eq 0 ] 
 	then
 		echo "Test 2 Success!"

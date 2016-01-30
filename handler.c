@@ -186,6 +186,7 @@ int command(int i, int o, int e, char* args[], int argsCount, int argsIndex)
 
 		default: // PARENT
 			add_proc(pid,args,argsCount,argsIndex);
+			/*
 			if(fds[o].f_type == P_WRITE)
 			{
 				close_fd(o);
@@ -195,6 +196,7 @@ int command(int i, int o, int e, char* args[], int argsCount, int argsIndex)
 				close_fd(i);
 			}
 			break;
+			*/
 	}
 	return 0;
 }
@@ -210,7 +212,7 @@ int p_wait()
 	/*
 	int s;
 	for (s = 0; s < fdCount; s++)
-	{
+	{z
 		close_fd(s);
 	}
 	*/

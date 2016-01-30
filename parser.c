@@ -386,13 +386,12 @@ int parser(int argc, char** argv)
             }
             case 'j': /*CLOSE*/ 
             {
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 int tmp;
                 char* end2;
                 tmp = strtol(optarg, &end2,0);
                 if(end2 == optarg) // Not a digit
                     fprintf(stderr,"ERROR: Argument is not a digit! \n");
-
-                verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
 
                 if(close_fd(tmp) == -1)
                     fprintf(stderr, "ERROR: File is already closed.");
