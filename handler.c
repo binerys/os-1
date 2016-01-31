@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <math.h>
 
 #include "handler.h"
 #include "parser.h"
@@ -276,13 +277,26 @@ void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag
     }
 }
 
-void profilePrint(int prev, int cur, int profile_flag)
+void profilePrint(int profile_flag)
 {
     if (profile_flag != 1)
     {
         return;
     }
+    int cpuPrev = 0;
+    int cpuCur = 0;
+    int cpuPrevSys = 0;
+    int cpuCurSys = 0;
+
+    cpuPrev = prev.ru_utime.tv_sec * pow(10,6) + prev.ru_utime.tv_usec;
+    cpuPrevSys = prev.ru_stime.tv_sec * pow(10,6) + prev.ru_stime.tv_usec;
+    cpuCur = usage.ru_utime.tv_sec * pow(10,6) + usage.ru_utime.tv_usec;
+    cpuCurSys = usage.ru_stime.tv_sec * pow(10,6) + usage.ru_stime.tv_usec;
+    
+
     int time;
-    time = cur - prev; 
-    printf("%d seconds", time); 
+    int sysTime;
+    time = cpuCur - cpuPrev;
+    sysTime = cpuCurSys - cpuPrevSys; 
+    printf("User time: %d seconds, System Time: %d seconds\n", time, sysTime); 
 }
