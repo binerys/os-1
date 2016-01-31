@@ -140,8 +140,8 @@ int parser(int argc, char** argv)
                 }
 
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
+
                 getrusage(RUSAGE_SELF, &usage);
-                
                 profilePrint(profileTrue);                
 
                 if ((optind < argc && argv[optind][0] != '-'))
@@ -154,16 +154,23 @@ int parser(int argc, char** argv)
             }
             case 'w': /* WRITE ONLY */
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--wronly' requires an argument \n");
                     exitStatus = 1;
+                    getrusage(RUSAGE_SELF, &usage);
+                    profilePrint(profileTrue);
                     break;
                 }
                 
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
                 
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
+
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
                     exitStatus = 1;
@@ -176,15 +183,22 @@ int parser(int argc, char** argv)
             }
             case 'd': /* READ AND WRITE */
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--rdwr' requires an argument \n");
+                
                     exitStatus = 1;
+                    getrusage(RUSAGE_SELF, &usage);
+                    profilePrint(profileTrue); 
                     break;
                 }
 
                 verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);                
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue); 
 
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
@@ -289,26 +303,40 @@ int parser(int argc, char** argv)
             }
             case 'v': /* VERBOSE */
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 verboseTrue = 1;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'a': /* WAIT */ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 if( p_wait() == -1 )
                     fprintf(stderr, "ERROR: Unable to wait on a process");
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'o': /* PIPE */ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 if (create_pipe() == -1)
                     fprintf(stderr,"ERROR: Unable to create a pipe");
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'z': /* ABORT */
             {
+                /*getrusage(RUSAGE_SELF, &usage);
+                prev = usage;*/
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 volatile int *a = NULL;
                 int b = *a;
@@ -316,11 +344,15 @@ int parser(int argc, char** argv)
             }
             case 'g': /* CATCH */ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--catch' requires an argument \n");
                     exitStatus = 1;
+                    getrusage(RUSAGE_SELF, &usage);
+                    profilePrint(profileTrue);
                     break;
                 }
 
@@ -336,15 +368,21 @@ int parser(int argc, char** argv)
                 catch_struct.sa_flags = 0;
                 char* catchEnd;
                 sigaction(strtol(optarg, &catchEnd, 0), &catch_struct, NULL);
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'q': /* IGNORE */ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--ignore' requires an argument \n");
                     exitStatus = 1;
+                    getrusage(RUSAGE_SELF, &usage);
+                    profilePrint(profileTrue);
                     break;
                 }
 
@@ -371,15 +409,21 @@ int parser(int argc, char** argv)
                     goto skip;
                 }
                 skip:
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'u': /* DEFAULT */ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--default' requires an argument \n");
                     exitStatus = 1;
+                    getrusage(RUSAGE_SELF, &usage);
+                    profilePrint(profileTrue); 
                     break;
                 }
 
@@ -392,16 +436,24 @@ int parser(int argc, char** argv)
 
                 char* defEnd;
                 signal (strtol(optarg, &defEnd, 0), SIG_DFL);
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break;
             }
             case 'h': /*PAUSE */ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 pause();
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue); 
                 break;
             }
             case 'j': /*CLOSE*/ 
             {
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 int tmp;
                 char* end2;
                 tmp = strtol(optarg, &end2,0);
@@ -413,12 +465,24 @@ int parser(int argc, char** argv)
                 if(close_fd(tmp) == -1)
                     fprintf(stderr, "ERROR: File is already closed.");
                 
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break;
             }
             case 'm': /* PROFILE */
             {
-                profileTrue = 1;
+                getrusage(RUSAGE_SELF, &usage);
+                prev = usage;
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
+                if (profileTrue == 0)
+                {
+                    profileTrue = 1;
+                }
+                else 
+                {
+                    getrusage(RUSAGE_SELF, &usage);
+                    profilePrint(profileTrue);
+                }
                 break;
             }
             default:
