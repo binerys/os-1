@@ -20,7 +20,7 @@ if [ $? -eq 0 ]
 		echo "Test 2 Success!"
 	else
 		echo "Make check failed for test 2"
-		echo " Test: ./simpsh --verbose --ignore 11 --rdwr a --append --rdwr b --append --wronly c --abort --pipe --pipe --command 1 4 2 tr A-Z a-z --command 5 0 2 cat - --command 3 6 2 sed '10d' --wait if [ $? -eq 0 ] "
+		echo " Test: ./simpsh --verbose --ignore 11 --rdwr a --append --rdwr b --append --wronly c --abort --pipe --pipe --command 1 4 2 tr A-Z a-z --command 5 0 2 cat - --command 3 6 2 sed '10d' --wait"
 		exit 1
 fi
 

@@ -290,6 +290,7 @@ int parser(int argc, char** argv)
                     {
                         break;
                     }
+
                     if(argSize == 1)
                     {
                         fprintf(stderr,"ERROR: Wait requires a single argument.");
@@ -313,25 +314,25 @@ int parser(int argc, char** argv)
                         printf("--wait \n");
                         fflush(stdout);
                     }
-                   /* if( p_wait(-1) == -1 )
-                        fprintf(stderr, "ERROR: Unable to wait on a process");*/
+                   if( p_wait(-1) == -1 )
+                        fprintf(stderr, "ERROR: Unable to wait on a process");
                 }
                 else
                 {
 
                     if(verboseTrue == 1)
                     {
-                        printf("--wait %d", subcmd_index);
+                        printf("--wait %d \n", subcmd_index);
                         fflush(stdout);
                     }
                 
-                   /* if(p_wait(subcmd_index) == -1){
+                    if(p_wait(subcmd_index) == -1){
                         fprintf(stderr, "ERROR: Unable to wait on a process");
                         exitStatus = 1;
-                    } */
+                    }
                 }
 
- 
+                break;
             }
             case 'o': /* PIPE */ 
             {
@@ -450,7 +451,6 @@ int parser(int argc, char** argv)
                     fprintf(stderr, "ERROR: File is already closed.");
                 }
 
-                
                 break;
             }
             case 'm': /* PROFILE */

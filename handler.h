@@ -54,6 +54,9 @@ void add_proc(pid_t pid, char** command, int commandCount, int commandIndex);
 **/
 int get_proc(pid_t pid);
 
+int get_command_pid(int commandIndex);
+
+
 
 /* Execution Functions */
 

@@ -125,6 +125,18 @@ int get_proc(pid_t pid)
 
 	// Unable to retrieve process index
 	return -1;
+}
+
+int get_command_pid(int commandIndex)
+{
+	int i;
+	for(i = 0; i<procCount; i++)
+	{
+		if(proc[i].cmdIndex == commandIndex)
+			return proc[i].pid;
+	}
+	// Unable to retrieve pid of process running command;
+	return -1;
 }	
 
 void add_proc(pid_t pid, char** command, int commandCount, int commandIndex)
@@ -206,6 +218,7 @@ int p_wait(int wait_command)
 	int i;
 	int status;
 	int pid; 
+	int commandPid;
 	int count = 0;
 
 	// Infinite waiting fix - Close all file descriptors
@@ -228,6 +241,7 @@ int p_wait(int wait_command)
 			if ( (i = get_proc(pid)) ==  -1) {
 				fprintf(stderr, "ERROR: Unable to retrieve process index of pid %d", pid);
 				break;
+				return -1;
 			}
 			count++;
 			
@@ -246,6 +260,44 @@ int p_wait(int wait_command)
 			printf("\n");
 
 		}
+	}
+	else if(wait_command >= 0)
+	{
+		if( (commandPid = get_command_pid(wait_command)) == -1 )
+		{
+			fprintf(stderr, "ERROR: Unable to retrieve pid of process running command %d", commandPid);
+			return -1;			
+		}
+
+		if( (pid = waitpid(commandPid, &status, 0)) == -1 )
+		{
+			fprintf(stderr, "ERROR: Unable to wait on command %d \n", wait_command);
+			return -1;
+		}
+
+		if ( (i = get_proc(pid)) ==  -1) {
+			fprintf(stderr, "ERROR: Unable to retrieve process index of pid %d", pid);
+			return -1;
+		}
+
+		if (WIFEXITED(status))
+			proc[i].status = WEXITSTATUS(status);
+
+		printf("%d", proc[i].status);
+
+		int k;
+		for(k = 0; k < proc[i].cmdCount; k++)
+		{
+			printf(" %s", proc[i].cmd[k]);
+		}
+		printf("\n");
+
+
+	}
+	else
+	{
+		fprintf(stderr, "ERROR: Invalid command id \n");
+		return -1;
 	}
 
 	return 0;
