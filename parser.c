@@ -128,6 +128,7 @@ int parser(int argc, char** argv)
             case 'r': /* READ ONLY */
             { 
                 getrusage(RUSAGE_SELF, &usage);
+                printf("User: %d", usage.ru_utime.tv_usec);
                 prev = usage;
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
@@ -143,6 +144,7 @@ int parser(int argc, char** argv)
 
                 getrusage(RUSAGE_SELF, &usage);
                 profilePrint(profileTrue);                
+                printf("User: %d ", usage.ru_utime.tv_usec); 
 
                 if ((optind < argc && argv[optind][0] != '-'))
                 {

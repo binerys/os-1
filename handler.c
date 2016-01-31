@@ -289,6 +289,8 @@ void profilePrint(int profile_flag)
     int cpuCurSys = 0;
 
     cpuPrev = prev.ru_utime.tv_sec * pow(10,6) + prev.ru_utime.tv_usec;
+    printf("User sec: %d, micro: %d ", usage.ru_utime.tv_sec - prev.ru_utime.tv_sec, usage.ru_utime.tv_usec - prev.ru_utime.tv_usec);
+     printf("Sys sec: %d, micro: %d ", usage.ru_stime.tv_sec - prev.ru_stime.tv_sec, usage.ru_stime.tv_usec - prev.ru_stime.tv_usec);
     cpuPrevSys = prev.ru_stime.tv_sec * pow(10,6) + prev.ru_stime.tv_usec;
     cpuCur = usage.ru_utime.tv_sec * pow(10,6) + usage.ru_utime.tv_usec;
     cpuCurSys = usage.ru_stime.tv_sec * pow(10,6) + usage.ru_stime.tv_usec;
