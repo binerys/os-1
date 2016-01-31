@@ -283,22 +283,15 @@ void profilePrint(int profile_flag)
     {
         return;
     }
-    int cpuPrev = 0;
-    int cpuCur = 0;
-    int cpuPrevSys = 0;
-    int cpuCurSys = 0;
+    int cpuSec = 0;
+    int cpuSysSec = 0;
+    int cpuUsec = 0;
+    int cpuSysUsec = 0;
 
-    cpuPrev = prev.ru_utime.tv_sec * pow(10,6) + prev.ru_utime.tv_usec;
-    printf("User sec: %d, micro: %d ", usage.ru_utime.tv_sec - prev.ru_utime.tv_sec, usage.ru_utime.tv_usec - prev.ru_utime.tv_usec);
-     printf("Sys sec: %d, micro: %d ", usage.ru_stime.tv_sec - prev.ru_stime.tv_sec, usage.ru_stime.tv_usec - prev.ru_stime.tv_usec);
-    cpuPrevSys = prev.ru_stime.tv_sec * pow(10,6) + prev.ru_stime.tv_usec;
-    cpuCur = usage.ru_utime.tv_sec * pow(10,6) + usage.ru_utime.tv_usec;
-    cpuCurSys = usage.ru_stime.tv_sec * pow(10,6) + usage.ru_stime.tv_usec;
-    
-
-    int time;
-    int sysTime;
-    time = cpuCur - cpuPrev;
-    sysTime = cpuCurSys - cpuPrevSys; 
-    printf("User time: %d seconds, System Time: %d seconds\n", time, sysTime); 
+    cpuSec = usage.ru_utime.tv_sec - prev.ru_utime.tv_sec;
+    cpuSysSec = usage.ru_stime.tv_sec - prev.ru_stime.tv_sec;
+    cpuUsec = usage.ru_utime.tv_usec - prev.ru_utime.tv_usec;
+    cpuSysUsec = usage.ru_stime.tv_usec - prev.ru_stime.tv_usec;
+ 
+    printf("User time: %d seconds %d microseconds, System Time: %d seconds, %d microseconds\n", cpuSec, cpuUsec, cpuSysSec, cpuSysUsec); 
 }
