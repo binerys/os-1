@@ -6,6 +6,8 @@
 #include <signal.h>
 #include <unistd.h>
 #include <setjmp.h>
+#include <sys/resource.h>
+#include <math.h>
 
 #include "parser.h"
 #include "handler.h"
@@ -14,6 +16,7 @@
 /* GLOBALS */
 int verboseTrue = 0; 
 int exitStatus = 0;
+int profileTrue = 0;
 
 char*** commands;
 int cmd_index = 0;
@@ -28,7 +31,11 @@ int fileFlags[11];
 
 jmp_buf context;
 
- 
+struct rusage usage;
+int cpuPrev = 0;
+int cpuCur = 0;
+int cpuTime = 0;
+
 int parser(int argc, char** argv)
 {
     int loop = 1;
@@ -119,15 +126,24 @@ int parser(int argc, char** argv)
             
             case 'r': /* READ ONLY */
             { 
+                getrusage(RUSAGE_SELF, &usage);
+                cpuPrev = (usage.ru_utime.tv_sec * pow(10,6) + usage.ru_utime.tv_usec) + (usage.ru_stime.tv_sec * pow(10,6) + usage.ru_stime.tv_usec);
                 if (optarg[0] == '-' && optarg[1] == '-')
                 {
                     verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                     fprintf(stderr, "option '--rdonly' requires an argument \n");
                     exitStatus = 1;
+                    getrusage(RUSAGE_SELF, &usage);
+                    cpuCur = (usage.ru_utime.tv_sec * pow(10,6) + usage.ru_utime.tv_usec) + (usage.ru_stime.tv_sec * pow(10,6) + usage.ru_stime.tv_usec);
                     break;
                 }
 
-                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);                
+                verbosePrint(verboseTrue, argv[optind - 2], optarg, 1);
+                getrusage(RUSAGE_SELF, &usage);
+                cpuCur = (usage.ru_utime.tv_sec * pow(10,6) + usage.ru_utime.tv_usec) + (usage.ru_stime.tv_sec * pow(10,6) + usage.ru_stime.tv_usec);
+                cpuTime = cpuCur - cpuPrev;
+                printf("%d seconds \n", cpuTime);
+                
                 if ((optind < argc && argv[optind][0] != '-'))
                 {
                     exitStatus = 1;
@@ -401,6 +417,7 @@ int parser(int argc, char** argv)
             }
             case 'm': /* PROFILE */
             {
+                profileTrue = 1;
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 break;
             }

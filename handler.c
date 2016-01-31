@@ -275,3 +275,14 @@ void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag
         fflush(stdout);
     }
 }
+
+void profilePrint(int prev, int cur, int profile_flag)
+{
+    if (profile_flag != 1)
+    {
+        return;
+    }
+    int time;
+    time = cur - prev; 
+    printf("%d seconds", time); 
+}

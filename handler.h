@@ -87,6 +87,9 @@ void catch_handler();
 *   next_Arg_flag: Checks whether the next argument should be printed or not
 **/
 void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag);
+
+void profilePrint(int prev, int cur, int profile_flag);
+
 int p_wait();
 
 extern jmp_buf context;
