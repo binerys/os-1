@@ -15,14 +15,14 @@ simpsh: $(OBJ)
 check:
 	./test-design.sh
 
-dist: lab1-GarimaLunawatBreannaNery.tar.gz
-lab1-GarimaLunawatBreannaNery.tar.gz: $(SOURCES)
-	mkdir lab1-GarimaLunawatBreannaNery
-	cp $(SOURCES) lab1-GarimaLunawatBreannaNery
-	tar -czf $@ lab1-GarimaLunawatBreannaNery
-	rm -r lab1-GarimaLunawatBreannaNery
+dist: lab1DP-GarimaLunawatBreannaNery.tar.gz
+lab1DP-GarimaLunawatBreannaNery.tar.gz: $(SOURCES)
+	mkdir lab1DP-GarimaLunawatBreannaNery
+	cp $(SOURCES) lab1DP-GarimaLunawatBreannaNery
+	tar -czf $@ lab1DP-GarimaLunawatBreannaNery
+	rm -r lab1DP-GarimaLunawatBreannaNery
 
 clean:
-	rm -f *.o *.so *.so.* simpsh lab1-GarimaLunawatBreannaNery.tar.gz
+	rm -f *.o *.so *.so.* simpsh lab1-GarimaLunawatBreannaNery.tar.gz lab1DP-GarimaLunawatBreannaNery.tar.gz
 
 
