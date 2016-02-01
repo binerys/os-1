@@ -56,6 +56,11 @@ void initialize(int argc, char** argv)
 	}
 
 	proc = malloc(procCount*sizeof(process));
+	// Initialize all exit statuses to -1
+	for(int i = 0; i < procCount; i++)
+	{
+		proc[i].status = -1;
+	}
 	commands = malloc(procCount*sizeof(char**));
 	fds = malloc(fdCount*sizeof(fileDescriptor));
 	max_args = argc;

@@ -13,7 +13,7 @@ simpsh: $(OBJ)
 
 #tests: 
 check:
-	./test.sh
+	./test-design.sh
 
 dist: lab1-GarimaLunawatBreannaNery.tar.gz
 lab1-GarimaLunawatBreannaNery.tar.gz: $(SOURCES)
