@@ -60,68 +60,101 @@ int parser(int argc, char** argv)
         {
             case 'p': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);  
                 fileFlags[0] = O_APPEND;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'x': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[1] = O_CLOEXEC;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break;
             }
             case 'e': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[2] = O_CREAT;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'i': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[3] = O_DIRECTORY;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break;
             }
             case 'n': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[4] = O_DSYNC;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'l': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[5] = O_EXCL;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'f': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[6] = O_NOFOLLOW;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 'b': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);    
                 fileFlags[7] = O_NONBLOCK;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break;
             }
             case 'y': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[8] = O_RSYNC;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 's': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[9] = O_SYNC;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             case 't': 
             {
+                getrusage(RUSAGE_SELF, &prev);
                 verbosePrint(verboseTrue, argv[optind - 1], optarg, 0);
                 fileFlags[10] = O_TRUNC;
+                getrusage(RUSAGE_SELF, &usage);
+                profilePrint(profileTrue);
                 break; 
             }
             
