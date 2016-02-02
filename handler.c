@@ -192,7 +192,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	return 0;
 }
 
-int p_wait()
+int p_wait(int profCheck)
 {
 	int i;
 	int status;
@@ -233,6 +233,13 @@ int p_wait()
 		printf("\n");
 
 	}
+    
+    if (profCheck == 1)
+    {
+        struct rusage comUsage;
+        getrusage(RUSAGE_CHILDREN, &comUsage);
+        printf("Children: User time: %d seconds %d microseconds, System Time: %d seconds, %d microseconds\n",comUsage.ru_utime.tv_sec, comUsage.ru_utime.tv_usec, comUsage.ru_stime.tv_sec, comUsage.ru_stime.tv_usec);  
+    }
 
 	return 0;
 }

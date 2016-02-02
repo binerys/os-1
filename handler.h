@@ -90,7 +90,7 @@ void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag
 
 void profilePrint(int profile_flag);
 
-int p_wait();
+int p_wait(int profCheck);
 
 extern jmp_buf context;
 
