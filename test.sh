@@ -38,4 +38,35 @@ fi
 
 rm a b c
 
+# TEST 4
+echo "Running Test 4"
+base64 /dev/urandom | head -c 10000000 > b1in.txt
+./simpsh --profile --rdonly b1in.txt --trunc --wronly b1out.txt --wronly b1err.txt --pipe --pipe --command 0 4 2 sort --command 5 1 2 cat - --command 3 6 2 tr a-z A-z --close 3 --close 4 --close 5 --close 6 --wait
+if [ $? -eq 0 ]
+    then
+        echo "Test 4 Success!"
+    else
+        echo "Make check failed for test 4"
+        echo " Test: ./simpsh --profile --rdonly b1in.txt --trunc --wronly b1out.txt --wronly b1err.txt --pipe --pipe --command 0 4 2 sort --command 5 1 2 cat - --command 3 6 2 tr a-z A-z --close 3 --close 4 --close 5 --close 6 --wait "
+        exit 1
+fi
+
+rm b1in.txt
+
+# TEST 5
+echo "Running Test 5"
+touch b2in.txt b2out.txt b2err.txt
+./simpsh --profile --rdonly b2in.txt --pipe --pipe --trunc --wronly b2out.txt --wronly b2err.txt --command 1 4 6 sort  --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 1 --close 2 --close 3 --close 4 --wait
+if [ $? -eq 0 ]
+    then
+        echo "Test 5 Success!"
+    else
+        echo "Make check failed for test 5"
+        echo " Test: ./simpsh --profile --rdonly b2in.txt --pipe --pipe --trunc --wronly b2out.txt --wronly b2err.txt --command 1 4 6 sort  --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 1 --close 2 --close 3 --close 4 --wait "
+        exit 1
+fi
+
+rm b2in.txt b2out.txt b2err.txt
+
+
 echo "Make check successfully completed"
