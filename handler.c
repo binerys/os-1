@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <math.h>
 
 #include "handler.h"
 #include "parser.h"
@@ -191,7 +192,7 @@ int command(int i, int o, int e, char* args[], int argsCount)
 	return 0;
 }
 
-int p_wait()
+int p_wait(int profCheck)
 {
 	int i;
 	int status;
@@ -232,6 +233,13 @@ int p_wait()
 		printf("\n");
 
 	}
+    
+    if (profCheck == 1)
+    {
+        struct rusage comUsage;
+        getrusage(RUSAGE_CHILDREN, &comUsage);
+        printf("Children: User time: %d seconds %d microseconds, System Time: %d seconds, %d microseconds\n",comUsage.ru_utime.tv_sec, comUsage.ru_utime.tv_usec, comUsage.ru_stime.tv_sec, comUsage.ru_stime.tv_usec);  
+    }
 
 	return 0;
 }
@@ -274,4 +282,23 @@ void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag
         printf("%s %s \n", arg, next_arg);
         fflush(stdout);
     }
+}
+
+void profilePrint(int profile_flag)
+{
+    if (profile_flag != 1)
+    {
+        return;
+    }
+    int cpuSec = 0;
+    int cpuSysSec = 0;
+    int cpuUsec = 0;
+    int cpuSysUsec = 0;
+
+    cpuSec = usage.ru_utime.tv_sec - prev.ru_utime.tv_sec;
+    cpuSysSec = usage.ru_stime.tv_sec - prev.ru_stime.tv_sec;
+    cpuUsec = usage.ru_utime.tv_usec - prev.ru_utime.tv_usec;
+    cpuSysUsec = usage.ru_stime.tv_usec - prev.ru_stime.tv_usec;
+ 
+    printf("User time: %d seconds %d microseconds, System Time: %d seconds, %d microseconds\n", cpuSec, cpuUsec, cpuSysSec, cpuSysUsec); 
 }

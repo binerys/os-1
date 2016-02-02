@@ -2,7 +2,7 @@
 #define HANDLER_H
 
 #include <setjmp.h>
-
+#include <sys/resource.h>
 
 /////////////////////////////////
 /* FUNCTIONS */
@@ -87,9 +87,14 @@ void catch_handler();
 *   next_Arg_flag: Checks whether the next argument should be printed or not
 **/
 void verbosePrint(int verbose_flag, char* arg, char* next_arg, int next_arg_flag);
-int p_wait();
+
+void profilePrint(int profile_flag);
+
+int p_wait(int profCheck);
 
 extern jmp_buf context;
 
+extern struct rusage usage;
+extern struct rusage prev;
 
 #endif
