@@ -2,7 +2,7 @@
 
 # TEST 1
 echo "Running Test 1"
-./simpsh --verbose --creat --rdonly a --pipe --pipe --creat --wronly b --creat --wronly  c --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 4 --close 2 --wait 0
+./simpsh --verbose --creat --rdonly test1_in --pipe --pipe --creat --wronly test1_out --creat --wronly  test1_err --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 4 --close 2 --wait 0
 if [ $? -eq 0 ] 
 	then
 		echo "Test 1 Success!"
@@ -12,10 +12,10 @@ if [ $? -eq 0 ]
 		exit 1
 fi
 
-rm a b c
+
 
 echo "Running Test 2"
-./simpsh --verbose --creat --rdonly a --pipe --pipe --creat --wronly b --creat --wronly  c --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 4 --close 2 --wait 0 --close 3 --wait 2
+./simpsh --verbose --creat --rdonly test2_in --pipe --pipe --creat --wronly test2_out --creat --wronly  test2_err --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 4 --close 2 --wait 0 --close 3 --wait 2
 if [ $? -eq 0 ] 
 	then
 		echo "Test 2 Success!"
@@ -25,11 +25,10 @@ if [ $? -eq 0 ]
 		exit 1
 fi
 
-rm a b c
 
 echo "Running Test 3"
 # TEST 3
-./simpsh --verbose --creat --rdonly a --pipe --pipe --creat --wronly b --creat --wronly  c --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 2 --wait 1 --close 4 --wait 0 --close 3 --close 1 --wait 2
+./simpsh --verbose --creat --rdonly test3_in --pipe --pipe --creat --wronly test3_out --creat --wronly  test3_err --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 2 --wait 1 --close 4 --wait 0 --close 3 --close 1 --wait 2
 if [ $? -eq 0 ] 
 	then
 		echo "Test 3 success!"
@@ -38,5 +37,5 @@ if [ $? -eq 0 ]
 		echo "Test: ./simpsh --verbose --creat --rdonly a --pipe --pipe --creat --wronly b --creat --wronly  c --command 1 4 6 sort --command 0 2 6 ls --command 3 5 6 tr a-z A-Z --close 2 --wait 1 --close 4 --wait 0 --close 3 --close 1 --wait 2"
 		exit 1
 fi
-rm a b c
+
 echo "Make check successfully completed"
